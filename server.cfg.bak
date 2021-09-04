@@ -1,0 +1,19 @@
+echo Executing Server Config...
+lanmode 0
+rcon_password p59xrxk0
+maxplayers 1000
+port 6666
+hostname San Andreas Multiplayer
+gamemode0 BPR
+filterscripts jogararma conce BPR BancoBrasil Radio Portao
+plugins streamer.so sscanf.so MapAndreas.so sampvoice.so
+announce 0
+query 1
+weburl brasilnet.forumeiros.com
+onfoot_rate 40
+incar_rate 40
+weapon_rate 40
+stream_distance 300.0
+stream_rate 100000 
+maxnpc 0
+logtimeformat [%H:%M:%S]

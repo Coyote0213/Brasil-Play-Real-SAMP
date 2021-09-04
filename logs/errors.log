@@ -1,0 +1,61 @@
+[07/26/21 17:18:48] [plugins/discord-connector] DCC_IsUserBot: invalid user id '0'
+[07/26/21 17:18:48] [plugins/discord-connector] DCC_HasGuildMemberRole: invalid user specified
+[07/26/21 17:18:51] [plugins/discord-connector] DCC_IsUserBot: invalid user id '0'
+[07/26/21 17:18:51] [plugins/discord-connector] DCC_HasGuildMemberRole: invalid user specified
+[07/26/21 17:20:14] [plugins/discord-connector] DCC_IsUserBot: invalid user id '0'
+[07/26/21 17:20:14] [plugins/discord-connector] DCC_HasGuildMemberRole: invalid user specified
+[07/26/21 17:20:29] [plugins/discord-connector] DCC_IsUserBot: invalid user id '0'
+[07/26/21 17:20:29] [plugins/discord-connector] DCC_HasGuildMemberRole: invalid user specified
+[07/26/21 17:21:53] [plugins/discord-connector] DCC_IsUserBot: invalid user id '0'
+[07/26/21 17:21:53] [plugins/discord-connector] DCC_HasGuildMemberRole: invalid user specified
+[07/26/21 17:21:56] [plugins/discord-connector] DCC_IsUserBot: invalid user id '0'
+[07/26/21 17:21:56] [plugins/discord-connector] DCC_HasGuildMemberRole: invalid user specified
+[07/26/21 17:22:46] [plugins/discord-connector] DCC_IsUserBot: invalid user id '0'
+[07/26/21 17:22:46] [plugins/discord-connector] DCC_HasGuildMemberRole: invalid user specified
+[07/26/21 17:22:47] [plugins/discord-connector] DCC_IsUserBot: invalid user id '0'
+[07/26/21 17:22:47] [plugins/discord-connector] DCC_HasGuildMemberRole: invalid user specified
+[07/26/21 17:24:14] [plugins/discord-connector] DCC_IsUserBot: invalid user id '0'
+[07/26/21 17:24:14] [plugins/discord-connector] DCC_HasGuildMemberRole: invalid user specified
+[07/27/21 14:17:36] [plugins/discord-connector] DCC_SendChannelMessage: could not prepare callback
+[07/27/21 14:21:38] [plugins/discord-connector] DCC_IsUserBot: invalid user id '0'
+[07/27/21 14:21:38] [plugins/discord-connector] DCC_HasGuildMemberRole: invalid user specified
+[07/27/21 14:22:37] [plugins/discord-connector] DCC_IsUserBot: invalid user id '0'
+[07/27/21 14:22:37] [plugins/discord-connector] DCC_HasGuildMemberRole: invalid user specified
+[07/27/21 14:31:42] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653965353386024/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[07/27/21 14:44:25] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653977224052757/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[07/27/21 14:55:08] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653965353386024/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[07/27/21 17:33:51] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653915735293952/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[07/27/21 17:47:34] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653915735293952/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[07/27/21 18:08:47] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653915735293952/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[07/27/21 18:18:17] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653915735293952/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[07/27/21 18:25:51] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/869315025611935806/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[07/27/21 18:36:21] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653977224052757/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[07/27/21 18:37:15] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[08/17/21 20:11:37] [plugins/discord-connector] Can't read from Discord websocket gateway: Foi forçado o cancelamento de uma conexão existente pelo host remoto (10054)
+[08/17/21 20:11:37] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[08/17/21 20:11:37] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[08/17/21 20:13:00] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653965353386024/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[08/18/21 22:09:27] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653966607745024/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[08/18/21 22:53:19] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653966607745024/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[08/19/21 01:26:09] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[08/20/21 13:25:41] [plugins/discord-connector] DCC_SendChannelMessage: could not prepare callback
+[08/21/21 20:34:45] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653970583420948/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[08/24/21 19:08:15] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/877681415016312873/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[08/24/21 19:19:22] [plugins/discord-connector] Can't read from Discord websocket gateway: Foi forçado o cancelamento de uma conexão existente pelo host remoto (10054)
+[08/24/21 19:19:22] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[08/24/21 19:19:23] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[08/24/21 19:20:02] [plugins/discord-connector] Can't read from Discord websocket gateway: Foi forçado o cancelamento de uma conexão existente pelo host remoto (10054)
+[08/24/21 19:20:02] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[08/24/21 19:47:53] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653915735293952/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[08/24/21 19:49:36] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[08/24/21 20:06:57] [plugins/discord-connector] DCC_SendChannelMessage: could not prepare callback
+[08/24/21 20:16:52] [plugins/discord-connector] Can't read from Discord websocket gateway: Foi forçado o cancelamento de uma conexão existente pelo host remoto (10054)
+[08/24/21 20:16:52] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[08/24/21 20:16:53] [plugins/discord-connector] Discord terminated websocket connection; reason: Not authenticated. (4003)
+[08/24/21 20:16:53] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[08/24/21 21:01:01] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[08/24/21 21:19:15] [plugins/discord-connector] DCC_SendChannelMessage: could not prepare callback
+[08/31/21 02:27:00] [plugins/discord-connector] Error while retrieving HTTP POST response from '/api/v8/channels/865653978225180673/messages': end of stream
+[09/03/21 21:17:03] [plugins/discord-connector] Can't read from Discord websocket gateway: Foi forçado o cancelamento de uma conexão existente pelo host remoto (10054)
+[09/03/21 21:17:03] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[09/03/21 21:17:04] [plugins/discord-connector] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)

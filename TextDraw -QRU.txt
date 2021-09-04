@@ -1,0 +1,229 @@
+#include <a_samp>
+//* ======================================================================== *//
+new Text:Textdraw0;
+new Text:Textdraw1;
+new Text:Textdraw2;
+new Text:Textdraw3;
+new Text:Textdraw4;
+new Text:Textdraw5;
+new Text:Textdraw6;
+new Text:Textdraw7;
+new Text:Textdraw8;
+new Text:Textdraw9;
+new Text:Textdraw10;
+new Text:Textdraw11;
+new Text:Textdraw12;
+new Text:Textdraw13;
+new Text:Textdraw14;
+new Text:Textdraw15;
+//* ======================================================================== *//
+public OnGameModeInit()
+{
+	Textdraw0 = TextDrawCreate(284.377685, 39.333286, "box");
+TextDrawLetterSize(Textdraw0, 0.000000, 0.163904);
+TextDrawTextSize(Textdraw0, 280.000000, 0.000000);
+TextDrawAlignment(Textdraw0, 1);
+TextDrawColor(Textdraw0, -1);
+TextDrawUseBox(Textdraw0, 1);
+TextDrawBoxColor(Textdraw0, -1);
+TextDrawSetShadow(Textdraw0, 0);
+TextDrawBackgroundColor(Textdraw0, 255);
+TextDrawFont(Textdraw0, 1);
+TextDrawSetProportional(Textdraw0, 1);
+
+Textdraw1 = TextDrawCreate(288.577941, 34.033367, "box");
+TextDrawLetterSize(Textdraw1, 0.000000, 0.410902);
+TextDrawTextSize(Textdraw1, 284.200256, 0.000000);
+TextDrawAlignment(Textdraw1, 1);
+TextDrawColor(Textdraw1, -1);
+TextDrawUseBox(Textdraw1, 1);
+TextDrawBoxColor(Textdraw1, -1);
+TextDrawSetShadow(Textdraw1, 0);
+TextDrawBackgroundColor(Textdraw1, 255);
+TextDrawFont(Textdraw1, 1);
+TextDrawSetProportional(Textdraw1, 1);
+
+Textdraw2 = TextDrawCreate(288.383422, 42.183269, "box");
+TextDrawLetterSize(Textdraw2, 0.000000, 0.743898);
+TextDrawTextSize(Textdraw2, 284.000000, 0.000000);
+TextDrawAlignment(Textdraw2, 1);
+TextDrawColor(Textdraw2, -1);
+TextDrawUseBox(Textdraw2, 1);
+TextDrawBoxColor(Textdraw2, 65535);
+TextDrawSetShadow(Textdraw2, 0);
+TextDrawBackgroundColor(Textdraw2, 255);
+TextDrawFont(Textdraw2, 1);
+TextDrawSetProportional(Textdraw2, 1);
+
+Textdraw3 = TextDrawCreate(284.277679, 44.516548, "box");
+TextDrawLetterSize(Textdraw3, 0.000000, 0.803897);
+TextDrawTextSize(Textdraw3, 280.000000, 0.000000);
+TextDrawAlignment(Textdraw3, 1);
+TextDrawColor(Textdraw3, -1);
+TextDrawUseBox(Textdraw3, 1);
+TextDrawBoxColor(Textdraw3, 65535);
+TextDrawSetShadow(Textdraw3, 0);
+TextDrawBackgroundColor(Textdraw3, 255);
+TextDrawFont(Textdraw3, 1);
+TextDrawSetProportional(Textdraw3, 1);
+
+Textdraw4 = TextDrawCreate(289.531372, 15.583345, "P");
+TextDrawLetterSize(Textdraw4, 0.511977, 4.195833);
+TextDrawAlignment(Textdraw4, 1);
+TextDrawColor(Textdraw4, 65535);
+TextDrawSetShadow(Textdraw4, 0);
+TextDrawSetOutline(Textdraw4, 1);
+TextDrawBackgroundColor(Textdraw4, 255);
+TextDrawFont(Textdraw4, 1);
+TextDrawSetProportional(Textdraw4, 1);
+
+Textdraw5 = TextDrawCreate(299.301910, 29.533351, "lay");
+TextDrawLetterSize(Textdraw5, 0.457159, 1.728333);
+TextDrawAlignment(Textdraw5, 1);
+TextDrawColor(Textdraw5, -1);
+TextDrawSetShadow(Textdraw5, 0);
+TextDrawSetOutline(Textdraw5, 1);
+TextDrawBackgroundColor(Textdraw5, 255);
+TextDrawFont(Textdraw5, 1);
+TextDrawSetProportional(Textdraw5, 1);
+
+Textdraw6 = TextDrawCreate(319.636047, 44.399936, "RP");
+TextDrawLetterSize(Textdraw6, 0.272093, 1.074999);
+TextDrawAlignment(Textdraw6, 1);
+TextDrawColor(Textdraw6, -1);
+TextDrawSetShadow(Textdraw6, 0);
+TextDrawSetOutline(Textdraw6, 1);
+TextDrawBackgroundColor(Textdraw6, 255);
+TextDrawFont(Textdraw6, 1);
+TextDrawSetProportional(Textdraw6, 1);
+
+Textdraw7 = TextDrawCreate(287.894470, 53.216648, "box");
+TextDrawLetterSize(Textdraw7, 0.000000, -0.588579);
+TextDrawTextSize(Textdraw7, 295.000000, 0.000000);
+TextDrawAlignment(Textdraw7, 1);
+TextDrawColor(Textdraw7, -1);
+TextDrawUseBox(Textdraw7, 1);
+TextDrawBoxColor(Textdraw7, 65535);
+TextDrawSetShadow(Textdraw7, 0);
+TextDrawBackgroundColor(Textdraw7, 255);
+TextDrawFont(Textdraw7, 1);
+TextDrawSetProportional(Textdraw7, 1);
+
+Textdraw8 = TextDrawCreate(283.694213, 56.216602, "box");
+TextDrawLetterSize(Textdraw8, 0.000000, -0.588579);
+TextDrawTextSize(Textdraw8, 292.000000, 0.000000);
+TextDrawAlignment(Textdraw8, 1);
+TextDrawColor(Textdraw8, -1);
+TextDrawUseBox(Textdraw8, 1);
+TextDrawBoxColor(Textdraw8, 65535);
+TextDrawSetShadow(Textdraw8, 0);
+TextDrawBackgroundColor(Textdraw8, 255);
+TextDrawFont(Textdraw8, 1);
+TextDrawSetProportional(Textdraw8, 1);
+
+Textdraw9 = TextDrawCreate(299.689636, 44.399936, "Real");
+TextDrawLetterSize(Textdraw9, 0.272093, 1.074999);
+TextDrawAlignment(Textdraw9, 1);
+TextDrawColor(Textdraw9, -1);
+TextDrawSetShadow(Textdraw9, 0);
+TextDrawSetOutline(Textdraw9, 1);
+TextDrawBackgroundColor(Textdraw9, 255);
+TextDrawFont(Textdraw9, 1);
+TextDrawSetProportional(Textdraw9, 1);
+
+Textdraw10 = TextDrawCreate(301.786773, 31.916681, "box");
+TextDrawLetterSize(Textdraw10, 0.000000, -0.470875);
+TextDrawTextSize(Textdraw10, 309.700683, 0.000000);
+TextDrawAlignment(Textdraw10, 1);
+TextDrawColor(Textdraw10, -1);
+TextDrawUseBox(Textdraw10, 1);
+TextDrawBoxColor(Textdraw10, -1);
+TextDrawSetShadow(Textdraw10, 0);
+TextDrawBackgroundColor(Textdraw10, 255);
+TextDrawFont(Textdraw10, 1);
+TextDrawSetProportional(Textdraw10, 1);
+
+Textdraw11 = TextDrawCreate(313.096008, 32.416965, "box");
+TextDrawLetterSize(Textdraw11, 0.000000, -0.588579);
+TextDrawTextSize(Textdraw11, 322.552917, 0.000000);
+TextDrawAlignment(Textdraw11, 1);
+TextDrawColor(Textdraw11, -1);
+TextDrawUseBox(Textdraw11, 1);
+TextDrawBoxColor(Textdraw11, 65535);
+TextDrawSetShadow(Textdraw11, 0);
+TextDrawBackgroundColor(Textdraw11, 255);
+TextDrawFont(Textdraw11, 1);
+TextDrawSetProportional(Textdraw11, 1);
+
+Textdraw12 = TextDrawCreate(301.786773, 30.816677, "box");
+TextDrawLetterSize(Textdraw12, 0.000000, -0.611431);
+TextDrawTextSize(Textdraw12, 307.370361, 0.000000);
+TextDrawAlignment(Textdraw12, 1);
+TextDrawColor(Textdraw12, -1);
+TextDrawUseBox(Textdraw12, 1);
+TextDrawBoxColor(Textdraw12, -1);
+TextDrawSetShadow(Textdraw12, 0);
+TextDrawBackgroundColor(Textdraw12, 255);
+TextDrawFont(Textdraw12, 1);
+TextDrawSetProportional(Textdraw12, 1);
+
+Textdraw13 = TextDrawCreate(310.795867, 30.416965, "box");
+TextDrawLetterSize(Textdraw13, 0.000000, -0.588579);
+TextDrawTextSize(Textdraw13, 320.252777, 0.000000);
+TextDrawAlignment(Textdraw13, 1);
+TextDrawColor(Textdraw13, -1);
+TextDrawUseBox(Textdraw13, 1);
+TextDrawBoxColor(Textdraw13, 65535);
+TextDrawSetShadow(Textdraw13, 0);
+TextDrawBackgroundColor(Textdraw13, 255);
+TextDrawFont(Textdraw13, 1);
+TextDrawSetProportional(Textdraw13, 1);
+
+Textdraw14 = TextDrawCreate(301.786773, 28.916669, "box");
+TextDrawLetterSize(Textdraw14, 0.000000, -0.611431);
+TextDrawTextSize(Textdraw14, 305.518554, 0.000000);
+TextDrawAlignment(Textdraw14, 1);
+TextDrawColor(Textdraw14, -1);
+TextDrawUseBox(Textdraw14, 1);
+TextDrawBoxColor(Textdraw14, -1);
+TextDrawSetShadow(Textdraw14, 0);
+TextDrawBackgroundColor(Textdraw14, 255);
+TextDrawFont(Textdraw14, 1);
+TextDrawSetProportional(Textdraw14, 1);
+
+Textdraw15 = TextDrawCreate(309.495788, 28.816959, "box");
+TextDrawLetterSize(Textdraw15, 0.000000, -0.588579);
+TextDrawTextSize(Textdraw15, 318.952697, 0.000000);
+TextDrawAlignment(Textdraw15, 1);
+TextDrawColor(Textdraw15, -1);
+TextDrawUseBox(Textdraw15, 1);
+TextDrawBoxColor(Textdraw15, 65535);
+TextDrawSetShadow(Textdraw15, 0);
+TextDrawBackgroundColor(Textdraw15, 255);
+TextDrawFont(Textdraw15, 1);
+TextDrawSetProportional(Textdraw15, 1);
+	
+
+	return 1;
+}
+//* ======================================================================== *//
+public OnPlayerSpawn(playerid)
+{
+    	TextDrawShowForPlayer(playerid, Textdraw0);
+    	TextDrawShowForPlayer(playerid, Textdraw1);
+    	TextDrawShowForPlayer(playerid, Textdraw2);
+    	TextDrawShowForPlayer(playerid, Textdraw3);
+    	TextDrawShowForPlayer(playerid, Textdraw4);
+    	TextDrawShowForPlayer(playerid, Textdraw5);
+	TextDrawShowForPlayer(playerid, Textdraw6);
+	TextDrawShowForPlayer(playerid, Textdraw7);
+	TextDrawShowForPlayer(playerid, Textdraw8);
+	TextDrawShowForPlayer(playerid, Textdraw9);
+	TextDrawShowForPlayer(playerid, Textdraw10);
+	TextDrawShowForPlayer(playerid, Textdraw11);
+	TextDrawShowForPlayer(playerid, Textdraw12);
+	TextDrawShowForPlayer(playerid, Textdraw13);
+	TextDrawShowForPlayer(playerid, Textdraw14);
+	TextDrawShowForPlayer(playerid, Textdraw15);
+	return 1;
+}
