@@ -21777,6 +21777,102 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 		}
 		return 1;
 	}
+	if(strcmp(cmd, "/setcarro", true) == 0)
+	{
+	    if(IsPlayerConnected(playerid))
+	    {
+	        if(PlayerInfo[playerid][pAdmin] < 1340)
+	    	{
+				SendClientMessage(playerid, COLOR_GRAD1, "Voce nao tem autorizacao para usar esse comando.");
+				return 1;
+	    	}
+			tmp = strtok(cmdtext, idx);
+			if(!strlen(tmp))
+			{
+				SendClientMessage(playerid, COLOR_GRAD2, "USE: /setcarro [id] [Carro]");
+				return 1;
+			}
+			new para1;
+			new level;
+			para1 = ReturnUser(tmp);
+			tmp = strtok(cmdtext, idx);
+			if(!strlen(tmp))
+			{
+				SendClientMessage(playerid, COLOR_GRAD2, "USE: /setcarro [id] [Carro]");
+				return 1;
+			}
+			level = strval(tmp);
+			if(level < 400 || level > 611) return SendClientMessage(playerid, -1, "Esse carro nao existe!");
+			//Avioes e jatos
+			if(level == 592) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 577) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 511) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 512) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 593) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 520) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 553) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 476) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 519) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 460) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 513) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			//Helicopteros Proibidos
+			if(level == 548) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 425) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 417) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 497) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 563) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			//Barcos
+			if(level == 472) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 473) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 493) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 595) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 484) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 430) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 453) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 452) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 446) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			if(level == 454) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			//Carros
+			if(level == 432) return SendClientMessage(playerid, -1, "Esse Carro esta proibido!!");
+			//Script para detectar se o Player esta on e setar o veiculo
+			GetPlayerName(para1, giveplayer, sizeof(giveplayer));
+			GetPlayerName(playerid, sendername, sizeof(sendername));
+		    if(IsPlayerConnected(para1))
+		    {
+		        if(para1 != INVALID_PLAYER_ID)
+		        {
+					format(string, sizeof(string), "   O Admin %s setou um veiculo em sua Garagem!", sendername);
+					SendClientMessage(para1, COLOR_LIGHTBLUE, string);
+					format(string, sizeof(string), "   Voce setou um veiculo para %s", giveplayer);
+					SendClientMessage(playerid, COLOR_LIGHTBLUE, string);
+					getdate(year, month, day);
+					gettime(hour,minute,second);
+					//Se o Slots 1 estiver Vazio
+					if(PlayerInfo[para1][pCar1] == 0){
+						PlayerInfo[para1][pCar1] = level;
+						return 1;
+					}
+					//Se o Slot 2 estiver vazio
+					else if(PlayerInfo[para1][pCar2] == 0){
+						PlayerInfo[para1][pCar2] = level;
+						return 1;
+					}
+					//Se o Slot 3 estiver vazio
+					else if(PlayerInfo[para1][pCar3] == 0){
+						PlayerInfo[para1][pCar3] = level;
+						return 1;
+					}
+					//Se o Slots 4 estiver vazio
+					else if(PlayerInfo[para1][pCar4] == 0){
+						PlayerInfo[para1][pCar4] = level;
+						return 1;
+					}
+					else if(PlayerInfo[para1][pCar1] != 0 && PlayerInfo[para1][pCar2] != 0 && PlayerInfo[para1][pCar3] != 0 && PlayerInfo[para1][pCar4] != 0) return SendClientMessage(playerid, -1, "O player nao possui slots disponiveis!");
+				}
+			}
+		}
+		return 1;
+	}
 
 	if(strcmp(cmd, "/daradmin", true) == 0)
 	{
@@ -22470,7 +22566,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
     if(strcmp(cmd,"/roubarcaixa",true)==0)
 	{
 	    if(IsACop(playerid)) return SendClientMessage(playerid, -1, "Policiais nao podem assaltar!");
-		if(ContarPM() == 0) return SendClientMessage(playerid, -1, "Voce nao pode roubar sem policial na cidade!");
+		if(ContarPM() <= 1) return SendClientMessage(playerid, -1, "Voce nao pode roubar sem 2 policiais na cidade!");
 		if(roubando[playerid] == 1)
 	    {
 	   		SendClientMessage(playerid, COLOR_GRAD5, "Voce ja esta roubando algum lugar.");
@@ -24766,7 +24862,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 	
 	if (strcmp(cmd, "/conce", true) == 0 || strcmp(cmd, "/concessionaria", true) == 0 || strcmp(cmd, "/conse", true) == 0)
 	{
-	    if(PlayerToPoint(1,playerid,553.1498,-1292.4086,17.2482))
+	    if(PlayerToPoint(5,playerid,553.1498,-1292.4086,17.2482))
    		{
 			Controle(playerid, 0);
 			ShowPlayerDialog(playerid,MenuConce,DIALOG_STYLE_LIST,"Concessionaria Brasil Play Real","Carros\nMotos", "Proximo","Sair");
@@ -24778,9 +24874,9 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 	
 	if(strcmp(cmd, "/pegarveiculo", true) == 0 || strcmp(cmd, "/garagem", true) == 0)
 	{
-	    if(PlayerToPoint(2.0,playerid,1541.4535,-1563.2844,13.7479) || PlayerToPoint(2.0,playerid,1225.1034,-1433.0675,13.7690)
- 		|| PlayerToPoint(2.0,playerid,310.3948,-1799.8964,4.5043) || PlayerToPoint(2.0,playerid,1563.0857,-2323.9531,13.5531)
-		|| PlayerToPoint(2.0,playerid,535.3613,-1274.7592,17.2422))
+	    if(PlayerToPoint(5.0,playerid,1541.4535,-1563.2844,13.7479) || PlayerToPoint(5.0,playerid,1225.1034,-1433.0675,13.7690)
+ 		|| PlayerToPoint(5.0,playerid,310.3948,-1799.8964,4.5043) || PlayerToPoint(5.0,playerid,1563.0857,-2323.9531,13.5531)
+		|| PlayerToPoint(5.0,playerid,535.3613,-1274.7592,17.2422))
 	    {
 		    GetPlayerName(playerid, plname, sizeof(plname));
 
