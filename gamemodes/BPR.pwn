@@ -2330,6 +2330,7 @@ static DCC_Channel:chatChannel;
 //Whitelist Channels
 static DCC_Channel:wlChannel;
 static DCC_Channel:wlrChannel;
+static DCC_Channel:cmdChannel;
 //---------------------------------------
 //Log Channels
 static DCC_Channel:logBp;
@@ -2350,7 +2351,7 @@ main()
 {
 	//commandChannel = DCC_FindChannelById("869315453443510282");
 	chatChannel = DCC_FindChannelById("865653977224052757");
-
+	cmdChannel = DCC_FindChannelById("885828129732587530");
 	wlChannel = DCC_FindChannelById("869315427153637436");
 	wlrChannel = DCC_FindChannelById("869315438918656060");
 
@@ -2571,109 +2572,114 @@ BPR::DCC_OnMessageCreate(DCC_Message:message){
     DCC_GetMessageContent(message, str); 
  
     sscanf(str, "s[32]s[128]", command, params);
+	if(channel == cmdChannel){
+		if(!strcmp(command, "bpr!pv", true)){
+			if(!hasRole){
+				return 1;
+			}
+			new playerID, _message[128];
 
-	if(!strcmp(command, "bpr!pv", true)){
-		if(!hasRole){
-			return 1;
+			sscanf(params, "us[128]", playerID, _message);
+
+			if(!IsPlayerConnected(playerID))
+			return DCC_SendChannelMessage(channel, "Esse player não esta online!");
+
+			new pvstring[128];
+			format(pvstring, sizeof(pvstring), "[{0000ff}MENSAGEM DISCORD{FFFFFF}] %s", _message);
+			SendClientMessage(playerID, -1, pvstring);
 		}
-		new playerID, _message[128];
 
-		sscanf(params, "us[128]", playerID, _message);
-
-		if(!IsPlayerConnected(playerID))
-		return DCC_SendChannelMessage(channel, "Esse player não esta online!");
-
-		new pvstring[128];
-		format(pvstring, sizeof(pvstring), "[{0000ff}MENSAGEM DISCORD{FFFFFF}] %s", _message);
-		SendClientMessage(playerID, -1, pvstring);
-   	}
-
-	if(!strcmp(command, "bpr!kick", true)){
-		if(!hasRole){
-			return 1;
-		}
-		new playerID, _message[128];
-
-		sscanf(params, "us[128]", playerID, _message);
-
-		if(!IsPlayerConnected(playerID))
-		return DCC_SendChannelMessage(channel, "Esse player não esta online!");
-
-		new kickstring[128];
-		format(kickstring, sizeof(kickstring), "ADMIN: %s foi kickado do servidor pelo Discord! Motivo: %s", PlayerName(playerID), _message);
-		SendClientMessageToAll(COLOR_LIGHTRED, kickstring);
-
-		new dsstring[128];
-		format(dsstring, sizeof(dsstring), "%s foi kickado com sucesso! Motivo: %s", PlayerName(playerID), _message);
-		DCC_SendChannelMessage(channel, dsstring);
-		SetTimerEx("KickarWL", 1000, 0, "i", playerID);
-		return 1;
-   	}
-
-	if(!strcmp(command, "bpr!chat", true)){
-		if(!hasRole){
-			return 1;
-		}
-		new string[128];
-		format(string, sizeof(string), "[{0000FF}AVISO DISCORD{FFFFFF}] - %s", params);
-		SendClientMessageToAll(-1, string);
-	}
-	if(!strcmp(command, "bpr!gerarcodigo", true)){
-		if(!hasRole){
+		if(!strcmp(command, "bpr!desbug", true)){
 			return 1;
 		}
 
-		new valords[128];
-		sscanf(params, "d", valords);
+		if(!strcmp(command, "bpr!kick", true)){
+			if(!hasRole){
+				return 1;
+			}
+			new playerID, _message[128];
 
-		//Define o Código e o valor que será criado
-		new Arquivin[64];
-		new codigo = 100000 + random(100000000);
-		format(Arquivin,sizeof(Arquivin),"Codigos/%d.ini",codigo);
+			sscanf(params, "us[128]", playerID, _message);
 
-		//Coloca o Código na pasta
-		dini_Create(Arquivin);
-		dini_Set(Arquivin,"Valor", params);
-     	
-     	//Mensagem no Chat para a pessoa
-     	new Str[999];
-     	format(Str,sizeof(Str),"Voce criou o codigo %d com sucesso com o valor %d!",codigo, valords);
-     	DCC_SendChannelMessage(channel, Str);
+			if(!IsPlayerConnected(playerID))
+			return DCC_SendChannelMessage(channel, "Esse player não esta online!");
 
-		//Log
-		new stri[128];
-		new codiguin[128];
-		new valorzin[128];
-		new DCC_Embed:embed = DCC_CreateEmbed();
-		DCC_SetEmbedTitle(embed, "Log Códigos");
-		DCC_SetEmbedColor(embed, 0xFF0000);
-		format(stri, sizeof stri, "Um novo Código de Coins Criado!");
-		DCC_SetEmbedDescription(embed, stri);
-		format(codiguin, sizeof codiguin, "`%d`", codigo);
-		DCC_AddEmbedField(embed, "Código:", codiguin, false);
-		format(valorzin, sizeof valorzin, "`%d`", valords);
-		DCC_AddEmbedField(embed, "Valor:", valorzin, false);
-		DCC_SetEmbedThumbnail(embed, "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
-		DCC_SetEmbedFooter(embed, "Log Brasil Play Real", "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
-		DCC_SendChannelEmbedMessage(logCMDAdmin, embed);
-		return 1;
-	}
-	if(!strcmp(command, "bpr!gmx", true)){
-		if(channel != chatChannel){
+			new kickstring[128];
+			format(kickstring, sizeof(kickstring), "ADMIN: %s foi kickado do servidor pelo Discord! Motivo: %s", PlayerName(playerID), _message);
+			SendClientMessageToAll(COLOR_LIGHTRED, kickstring);
+
+			new dsstring[128];
+			format(dsstring, sizeof(dsstring), "%s foi kickado com sucesso! Motivo: %s", PlayerName(playerID), _message);
+			DCC_SendChannelMessage(channel, dsstring);
+			SetTimerEx("KickarWL", 1000, 0, "i", playerID);
 			return 1;
 		}
 
-		if(!hasRole){
+		if(!strcmp(command, "bpr!chat", true)){
+			if(!hasRole){
+				return 1;
+			}
+			new string[128];
+			format(string, sizeof(string), "[{0000FF}AVISO DISCORD{FFFFFF}] - %s", params);
+			SendClientMessageToAll(-1, string);
+		}
+		if(!strcmp(command, "bpr!gerarcodigo", true)){
+			if(!hasRole){
+				return 1;
+			}
+
+			new valords[128];
+			sscanf(params, "d", valords);
+
+			//Define o Código e o valor que será criado
+			new Arquivin[64];
+			new codigo = 100000 + random(100000000);
+			format(Arquivin,sizeof(Arquivin),"Codigos/%d.ini",codigo);
+
+			//Coloca o Código na pasta
+			dini_Create(Arquivin);
+			dini_Set(Arquivin,"Valor", params);
+			
+			//Mensagem no Chat para a pessoa
+			new Str[999];
+			format(Str,sizeof(Str),"Voce criou o codigo %d com sucesso com o valor %d!",codigo, valords);
+			DCC_SendChannelMessage(channel, Str);
+
+			//Log
+			new stri[128];
+			new codiguin[128];
+			new valorzin[128];
+			new DCC_Embed:embed = DCC_CreateEmbed();
+			DCC_SetEmbedTitle(embed, "Log Códigos");
+			DCC_SetEmbedColor(embed, 0xFF0000);
+			format(stri, sizeof stri, "Um novo Código de Coins Criado!");
+			DCC_SetEmbedDescription(embed, stri);
+			format(codiguin, sizeof codiguin, "`%d`", codigo);
+			DCC_AddEmbedField(embed, "Código:", codiguin, false);
+			format(valorzin, sizeof valorzin, "`%d`", valords);
+			DCC_AddEmbedField(embed, "Valor:", valorzin, false);
+			DCC_SetEmbedThumbnail(embed, "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
+			DCC_SetEmbedFooter(embed, "Log Brasil Play Real", "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
+			DCC_SendChannelEmbedMessage(logCMDAdmin, embed);
 			return 1;
 		}
-		new AVISOMenssage[999];
-		SendClientMessageToAll(COLOR_WHITE,"{0000FF}DISCORD AVISO{FFFFFF}: Servidor reiniciando {0000FF}AGORA");
-		format(AVISOMenssage,sizeof(AVISOMenssage),"{0000FF}AVISO:{FFFFFF} Servidor reiniciando agora!!");
-		SendClientMessageToAll(COLOR_WHITE,AVISOMenssage);
-		//DCC_SendChannelMessage(chatChannel, "Servidor reiniciando agora!");
-		DCC_SendChannelMessage(channel, "Servidor reiniciado com sucesso!");
-		GameModeExitFunc();
-		SaveAccounts();
+		if(!strcmp(command, "bpr!gmx", true)){
+			if(channel != chatChannel){
+				return 1;
+			}
+
+			if(!hasRole){
+				return 1;
+			}
+			new AVISOMenssage[999];
+			SendClientMessageToAll(COLOR_WHITE,"{0000FF}DISCORD AVISO{FFFFFF}: Servidor reiniciando {0000FF}AGORA");
+			format(AVISOMenssage,sizeof(AVISOMenssage),"{0000FF}AVISO:{FFFFFF} Servidor reiniciando agora!!");
+			SendClientMessageToAll(COLOR_WHITE,AVISOMenssage);
+			//DCC_SendChannelMessage(chatChannel, "Servidor reiniciando agora!");
+			DCC_SendChannelMessage(channel, "Servidor reiniciado com sucesso!");
+			GameModeExitFunc();
+			SaveAccounts();
+		}
 	}
 	if(channel == wlChannel)
 	{
@@ -5256,7 +5262,7 @@ BPR::OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	       			{
 						if(RetirouCarro1[playerid] == 0)
 						{
-			            	RetirouCarro1[playerid] = AddStaticVehicle(carid1,1560.0160,-2315.5276,13.1999,89.8470,0,0);
+			            	RetirouCarro1[playerid] = AddStaticVehicle(carid1,535.3613,-1274.7592,17.2422,225.6388,0,0);
 			            	SendClientMessage(playerid, COLOR_WHITE, "Voce pegou seu veiculo com sucesso!");
 							//RetirouCarro1[playerid] = 1;
 		            	}
@@ -10826,19 +10832,19 @@ BPR::OnPlayerDisconnect(playerid, reason)
 		admtrampando[playerid] = 0;
 	}
     DestroyVehicle(BikeSpawn[playerid]);
-   	BikeSpawn[playerid] = -1;
+   	BikeSpawn[playerid] = 0;
    	
    	DestroyVehicle(CarroPlayer[playerid]);
-   	CarroPlayer[playerid] = -1;
+   	CarroPlayer[playerid] = 0;
    	
    	DestroyVehicle(RetirouCarro1[playerid]);
-	RetirouCarro1[playerid] = -1;
+	RetirouCarro1[playerid] = 0;
    	DestroyVehicle(RetirouCarro2[playerid]);
-	RetirouCarro2[playerid] = -1;
+	RetirouCarro2[playerid] = 0;
 	DestroyVehicle(RetirouCarro3[playerid]);
-	RetirouCarro3[playerid] = -1;
+	RetirouCarro3[playerid] = 0;
 	DestroyVehicle(RetirouCarro4[playerid]);
-	RetirouCarro4[playerid] = -1;
+	RetirouCarro4[playerid] = 0;
     
     SendDeathMessage(playerid, -1, 201); 
 	Delete3DTextLabel(nivellabel[playerid]);
@@ -15156,126 +15162,120 @@ BPR::OnGameModeInit()
 	Create3DTextLabel("Menu para advogados", 0xE6E6FAFF, 709.5348,-568.6559,-6.1966, 10.0, 0);
 	Create3DTextLabel("\naperte a letra F para acessar.", 0xE6E6FAFF, 709.5348,-568.6559,-6.1966, 10.0, 0);
 	Create3DTextLabel("HQ Tropa da Turquia", COLOR_DBLUE, -2336.6111,-166.8267,35.5547, 60, 0);
-	Create3DTextLabel("Ola, seja muito bem vindo ao Brasil Play Real, espero que curta nosso servidor!\nCaso precise de ajuda use /relatorio", -1, 1685.6195,-2329.2954,13.5469, 60, 0);
-	Create3DTextLabel("Aluguel de bike $5\nPara alugar digite /bike", -1, 1682.5848,-2308.7366,13.5409, 60, 0);
-	Create3DTextLabel("Central de Desmanche\n Use /desmanchar para fazer o desmanche", -1, 2768.5376,-1607.3044,10.5738, 60, 0);
+
+	Create3DTextLabel("{0000FF}[BEM-VINDO]\n{FFFFFF}Ola, seja muito bem vindo ao Brasil Play Real, espero que curta nosso servidor!\nCaso precise de ajuda use /relatorio", -1, 1685.6195,-2329.2954,13.5469, 60, 0);
 	CreateActor(211,1685.6195,-2329.2954,13.5469,175.2724);//Staff Spawn
-    CreateActor(217,1682.5848,-2308.7366,13.5409,181.5392);//Staff Bike
-    CreatePickup(1239,0,2768.5376,-1607.3044,10.5738);//Pickup Desmanche
+	Create3DTextLabel("{A52A2A}[Aluguel de bike]\n{FFFFFF}Para alugar sua bike por {228B22}R$5,00{FFFFFF} digite /bike", -1, 1682.5848,-2308.7366,13.5409, 60, 0);
+	CreateActor(217,1682.5848,-2308.7366,13.5409,181.5392);//Staff Bike
+	Create3DTextLabel("{00CED1}[Central de Desmanche]\n{FFFFFF}Use /desmanchar para fazer o desmanche", -1, 2770.0596,-1620.2411,12.8336, 60, 0);
+    CreatePickup(1239,0,2770.0596,-1620.2411,12.8336);//Pickup Desmanche
     
     //Estacionamento Praca
-    Create3DTextLabel("Garagem\nUse /garagem para pegar seu veiculo!", -1, 1541.4535,-1563.2844,13.7479, 60, 0);
+    Create3DTextLabel("{0000FF}[Garagem]\n{FFFFFF}Use /garagem para pegar seu veiculo!", -1, 1541.4535,-1563.2844,13.7479, 60, 0);
     CreatePickup(1239,0,1541.4535,-1563.2844,13.7479);
     
     //Estacionamento Hospital
-    Create3DTextLabel("Garagem\nUse /garagem para pegar seu veiculo!", -1, 1225.1034,-1433.0675,13.7690, 60, 0);
+    Create3DTextLabel("{0000FF}[Garagem]\n{FFFFFF}Use /garagem para pegar seu veiculo!", -1, 1225.1034,-1433.0675,13.7690, 60, 0);
     CreatePickup(1239,0,1225.1034,-1433.0675,13.7690);
 
 	//Estacionamento Praia
-	Create3DTextLabel("Garagem\nUse /garagem para pegar seu veiculo!", -1, 310.3948,-1799.8964,4.5043, 60, 0);
+	Create3DTextLabel("{0000FF}[Garagem]\n{FFFFFF}Use /garagem para pegar seu veiculo!", -1, 310.3948,-1799.8964,4.5043, 60, 0);
     CreatePickup(1239,0,310.3948,-1799.8964,4.5043);
     
     //Estacionamento Spawn
-    Create3DTextLabel("Garagem\nUse /garagem para pegar seu veiculo!", -1, 1563.0857,-2323.9531,13.5531, 60, 0);
+    Create3DTextLabel("{0000FF}[Garagem]\n{FFFFFF}Use /garagem para pegar seu veiculo!", -1, 1563.0857,-2323.9531,13.5531, 60, 0);
     CreatePickup(1239,0,1563.0857,-2323.9531,13.5531);
 
 	//Estacionamento garagem
-    Create3DTextLabel("Garagem\nUse /garagem para pegar seu veiculo!", -1, 535.3613,-1274.7592,17.2422, 60, 0);
+    Create3DTextLabel("{0000FF}[Garagem]\n{FFFFFF}Use /garagem para pegar seu veiculo!", -1, 535.3613,-1274.7592,17.2422, 60, 0);
     CreatePickup(1239,0,535.3613,-1274.7592,17.2422);
 //==============================================================================================================
     //Roubo Caixa Loja 
-	Create3DTextLabel("Para roubar esse caixa digite /roubarcaixa", -1, 1101.7953,-1375.0850,13.7594, 60, 0);
+	Create3DTextLabel("{B22222}[ROUBO]\n{FFFFFF}Para roubar esse caixa digite /roubarcaixa", -1, 1101.7953,-1375.0850,13.7594, 60, 0);
 	CreatePickup(1239,0,1101.7953,-1375.0850,13.7594);
 	//Roubo Caixa Loja 
-	Create3DTextLabel("Para roubar esse caixa digite /roubarcaixa", -1, 836.2842,-2061.0852,12.8752, 60, 0);
+	Create3DTextLabel("{B22222}[ROUBO]\n{FFFFFF}Para roubar esse caixa digite /roubarcaixa", -1, 836.2842,-2061.0852,12.8752, 60, 0);
 	CreatePickup(1239,0,836.2842,-2061.0852,12.8752);
 	//Roubo Caixa Loja 
-	Create3DTextLabel("Para roubar esse caixa digite /roubarcaixa", -1, 1026.6843,-1996.4766,13.1968, 60, 0);
+	Create3DTextLabel("{B22222}[ROUBO]\n{FFFFFF}Para roubar esse caixa digite /roubarcaixa", -1, 1026.6843,-1996.4766,13.1968, 60, 0);
 	CreatePickup(1239,0,1026.6843,-1996.4766,13.1968);
 	
 	//Concessionaria 
-	Create3DTextLabel("Concessionaria\nUse /conce para comprar seu veiculo!", -1, 553.1498,-1292.4086,17.2482, 60, 0);
+	Create3DTextLabel("{033099}[Concessionaria]\n{FFFFFF}Use /conce para comprar seu veiculo!", -1, 553.1498,-1292.4086,17.2482, 60, 0);
 	CreatePickup(1239,0,553.1498,-1292.4086,17.2482);
     
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 	//Menu de veiculos Governo
-	Create3DTextLabel("Menu de Veiculos Governo LS\nAperte F para abrir", -1, 1509.6018,-1849.7678,13.5469, 60, 0);
+	Create3DTextLabel("{b09604}Menu de Veiculos Governo LS\n{FFFFFF}Aperte F para abrir", -1, 1509.6018,-1849.7678,13.5469, 60, 0);
 	CreatePickup(1239,0,1509.6018,-1849.7678,13.5469);
 	
-	//Menu de veiculos Governo SF
-	Create3DTextLabel("Menu de Veiculos Governo SF\nAperte F para abrir", -1, -2764.9688,379.0204,6.3375, 60, 0);
-	CreatePickup(1239,0,-2764.9688,379.0204,6.3375);
-	
 	//Menu de veiculos Medicos
-	Create3DTextLabel("Menu de Veiculos Medicos\nAperte F para abrir", -1, 2038.3962,-1411.6052,17.1641, 60, 0);
+	Create3DTextLabel("{cbccc6}Menu de Veiculos Medicos\n{FFFFFF}Aperte F para abrir", -1, 2038.3962,-1411.6052,17.1641, 60, 0);
 	CreatePickup(1239,0,2038.3962,-1411.6052,17.1641);
-	//Menu de veiculos Medicos SF
-	Create3DTextLabel("Menu de Veiculos Medicos\nAperte F para abrir", -1, -2660.8481,632.0801,14.4531, 60, 0);
-	CreatePickup(1239,0,-2660.8481,632.0801,14.4531);
 
 	//Menu de veiculos Taxi
-	Create3DTextLabel("Menu de Veiculos Taxista\nAperte F para abrir", -1, 1793.0687,-1704.5559,13.5281, 60, 0);
+	Create3DTextLabel("{e5ff00}Menu de Veiculos Taxista\n{FFFFFF}Aperte F para abrir", -1, 1793.0687,-1704.5559,13.5281, 60, 0);
 	CreatePickup(1239,0,1793.0687,-1704.5559,13.5281);
 
 	//Menu de veiculos Los Santos News
-	Create3DTextLabel("Menu de Veiculos Los Santos News\nAperte F para abrir", -1, 741.7016,-1334.9618,13.5394, 60, 0);
+	Create3DTextLabel("{878b91}Menu de Veiculos Los Santos News\n{FFFFFF}Aperte F para abrir", -1, 741.7016,-1334.9618,13.5394, 60, 0);
 	CreatePickup(1239,0,741.7016,-1334.9618,13.5394);
 	
 	//Menu de veiculos Policia Militar//
-	Create3DTextLabel("Menu de Veiculos Policia Militar\nUse /menupm para abrir", -1, 1532.4894,-1681.5950,5.8906, 60, 0);
+	Create3DTextLabel("{1c6ee8}Menu de Veiculos Policia Militar\n{FFFFFF}Use /menupm para abrir", -1, 1532.4894,-1681.5950,5.8906, 60, 0);
 	CreatePickup(1239,0,1532.4894,-1681.5950,5.8906);
 
 	//Menu de veiculos Policia Federal//
-	Create3DTextLabel("Menu de Veiculos Policia Federal\nUse /menupf para abrir", -1, -2442.6738,526.4616,29.9201, 60, 0);
+	Create3DTextLabel("{1c6ee8}Menu de Veiculos Policia Federal\n{FFFFFF}Use /menupf para abrir", -1, -2442.6738,526.4616,29.9201, 60, 0);
 	CreatePickup(1239,0,-2442.6738,526.4616,29.9201);
 
 	//Menu de veiculos Policia Civil//
-	Create3DTextLabel("Menu de Veiculos Policia Civil\nUse /menupc para abrir", -1, 900.5388,-1257.6967,14.9560, 60, 0);
+	Create3DTextLabel("{bbaa5e}Menu de Veiculos Policia Civil\n{FFFFFF}Use /menupc para abrir", -1, 900.5388,-1257.6967,14.9560, 60, 0);
 	CreatePickup(1239,0,900.5388,-1257.6967,14.9560);
 
 	//Menu de veiculos BOPE//
-	Create3DTextLabel("Menu de Veiculos BOPE\nUse /menubope para abrir", -1, 300.9082,-1492.3870,24.5938, 60, 0);
+	Create3DTextLabel("{454745}Menu de Veiculos BOPE\n{FFFFFF}Use /menubope para abrir", -1, 300.9082,-1492.3870,24.5938, 60, 0);
 	CreatePickup(1239,0,300.9082,-1492.3870,24.5938);
 
 	//Menu de veiculos Forcas Armadas//
-	Create3DTextLabel("Menu de Veiculos Forcas Armadas\nUse /menufa para abrir", -1, -1533.7620,422.3723,7.1875, 60, 0);
+	Create3DTextLabel("{0e9404}Menu de Veiculos Forcas Armadas\n{FFFFFF}Use /menufa para abrir", -1, -1533.7620,422.3723,7.1875, 60, 0);
 	CreatePickup(1239,0,-1533.7620,422.3723,7.1875);
 
 	//Menu de veiculos Mafia Cosa Nostra//
-	Create3DTextLabel("Menu de Veiculos Mafia Cosa Nostra\nAperte F para abrir", -1, 282.5849,-1163.2761,80.9141, 60, 0);
+	Create3DTextLabel("{c70697}Menu de Veiculos Mafia Cosa Nostra\n{FFFFFF}Aperte F para abrir", -1, 282.5849,-1163.2761,80.9141, 60, 0);
 	CreatePickup(1239,0,282.5849,-1163.2761,80.9141);
 
 	//Menu de veiculos Vagos//
-	Create3DTextLabel("Menu de Veiculos Vagos\nAperte F para abrir", -1, 2806.4182,-1183.8268,25.4097, 60, 0);
+	Create3DTextLabel("{edde07}Menu de Veiculos Vagos\n{FFFFFF}Aperte F para abrir", -1, 2806.4182,-1183.8268,25.4097, 60, 0);
 	CreatePickup(1239,0,2806.4182,-1183.8268,25.4097);
 
 	//Menu de veiculos Comando Vermelho//
-	Create3DTextLabel("Menu de Veiculos Comando Vermelho\nAperte F para abrir", -1, 2157.9736,-1800.8035,13.3718, 60, 0);
+	Create3DTextLabel("{ed0707}Menu de Veiculos Comando Vermelho\n{FFFFFF}Aperte F para abrir", -1, 2157.9736,-1800.8035,13.3718, 60, 0);
 	CreatePickup(1239,0,2157.9736,-1800.8035,13.3718);
 
 	//Menu de veiculos Sons Of Anarchy//
-	Create3DTextLabel("Menu de Veiculos Sons Of Anarchy\nAperte F para abrir", -1, 709.2042,-458.0265,16.3359, 60, 0);
+	Create3DTextLabel("{07daed}Menu de Veiculos Sons Of Anarchy\n{FFFFFF}Aperte F para abrir", -1, 709.2042,-458.0265,16.3359, 60, 0);
 	CreatePickup(1239,0,709.2042,-458.0265,16.3359);
 
 	//Menu de veiculos Elements//
-	Create3DTextLabel("Menu de Veiculos Elements\nAperte F para abrir", -1, 2795.2830,-1588.8105,10.9270, 60, 0);
+	Create3DTextLabel("{07daed}Menu de Veiculos Elements\n{FFFFFF}Aperte F para abrir", -1, 2795.2830,-1588.8105,10.9270, 60, 0);
 	CreatePickup(1239,0,2795.2830,-1588.8105,10.9270);
 
 	//Menu de veiculos Triads
-	Create3DTextLabel("Menu de Veiculos Triads\nAperte F para abrir", -1, -1699.1467,1332.3953,7.1791, 60, 0);
+	Create3DTextLabel("{7f7e80}Menu de Veiculos Triads\n{FFFFFF}Aperte F para abrir", -1, -1699.1467,1332.3953,7.1791, 60, 0);
 	CreatePickup(1239,0,-1699.1467,1332.3953,7.1791);
 
 	//Menu de veiculos Primeiro Comando da Capital
-	Create3DTextLabel("Menu de Veiculos Primeiro Comando da Capital\nAperte F para abrir", -1, 1309.8995,-856.0664,39.5781, 60, 0);
+	Create3DTextLabel("{8c0303}Menu de Veiculos Primeiro Comando da Capital\n{FFFFFF}Aperte F para abrir", -1, 1309.8995,-856.0664,39.5781, 60, 0);
 	CreatePickup(1239,0,1309.8995,-856.0664,39.5781);
 
 	//Menu de veiculos Grota
-	Create3DTextLabel("Menu de Veiculos Grota\nAperte F para abrir", -1, -2515.5208,1209.7000,37.4219, 60, 0);
+	Create3DTextLabel("{069414}Menu de Veiculos Grota\n{FFFFFF}Aperte F para abrir", -1, -2515.5208,1209.7000,37.4219, 60, 0);
 	CreatePickup(1239,0,-2515.5208,1209.7000,37.4219);
 
 	//Menu de veiculos Groove
-	Create3DTextLabel("Menu de Veiculos Groove\nAperte F para abrir", -1, 2462.7847,-1700.2332,13.5188, 60, 0);
+	Create3DTextLabel("{07e61d}Menu de Veiculos Groove\n{FFFFFF}Aperte F para abrir", -1, 2462.7847,-1700.2332,13.5188, 60, 0);
 	CreatePickup(1239,0,2462.7847,-1700.2332,13.5188);
 
  //>=-=-=-=-=-=-=-=-=-=-=-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==
@@ -21777,6 +21777,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 		}
 		return 1;
 	}
+	
 	if(strcmp(cmd, "/setcarro", true) == 0)
 	{
 	    if(IsPlayerConnected(playerid))
@@ -22561,7 +22562,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 	    }
 	    return true;
 	}
-//=======================[NOVO ROUBAR]========================
+//=======================[ROUBO CAIXA]========================
 
     if(strcmp(cmd,"/roubarcaixa",true)==0)
 	{
@@ -23364,7 +23365,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 		}
 		return true;
 	}
-	if(strcmp(cmd,"/trazersemp",true)==0  && PlayerInfo[playerid][pAdmin] == 1341)
+	if(strcmp(cmd,"/trazersemp",true)==0  && PlayerInfo[playerid][pAdmin] >= 1341)
 	{
 		tmp = strtok(cmdtext, idx);
 		if(!strlen(tmp))
@@ -23380,7 +23381,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 		SBizzInfo[idsemp][sbEntranceZ] = z;
 		return true;
 	}
-	if(strcmp(cmd,"/trazeremp",true)==0  && PlayerInfo[playerid][pAdmin] == 1341)
+	if(strcmp(cmd,"/trazeremp",true)==0  && PlayerInfo[playerid][pAdmin] >= 1341)
 	{
 		tmp = strtok(cmdtext, idx);
 		if(!strlen(tmp))
@@ -24702,7 +24703,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 			new vehicle;
 			vehicle = GetPlayerVehicleID(playerid);
 			if(vehicle == CarroPlayer[playerid]) return SendClientMessage(playerid, -1, "Voce nao pode desmanchar um carro seu!");
-	        if(IsPlayerInRangeOfPoint(playerid, 3.0, 2768.5376,-1607.3044,10.5738))
+	        if(IsPlayerInRangeOfPoint(playerid, 3.0, 2770.0596,-1620.2411,12.8336))
 	    	{
 		    	if(IsPlayerInAnyVehicle(playerid))
 				{
