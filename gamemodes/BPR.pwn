@@ -275,6 +275,9 @@ new RetirouCarro4[MAX_PLAYERS];
 new CarroPlayer[MAX_PLAYERS];
 new BikeSpawn[MAX_PLAYERS];
 
+//Sistema de Continuar
+new timecont[MAX_PLAYERS];
+
 new online;
 //new uptime = 0;
 
@@ -2685,7 +2688,7 @@ BPR::DCC_OnMessageCreate(DCC_Message:message){
 	{
 		if(!strcmp(command, "bpr!wladd", true)){
 			new nomeplayer[128];
-			sscanf(params, "s", nomeplayer);
+			sscanf(params, "u", nomeplayer);
 			new file[128];
 			format(file,sizeof(file),"Whitelist/%s.ini",nomeplayer);
 			fopen(file);
@@ -10821,6 +10824,12 @@ BPR::Lotto(number)
 //------------------------------------------------------------------------------------------------------
 BPR::OnPlayerDisconnect(playerid, reason)
 {
+	if(timecont[playerid] == 1){
+		timecont[playerid] = 0;
+	}
+	if(OnDuty[playerid] >= 1){
+		OnDuty[playerid] = 0;
+	}
     online--;
     if(InfoKelve[playerid][NumSenha] != 999)
     {
@@ -12126,8 +12135,36 @@ BPR::OnPlayerDeath(playerid, killerid, reason)
 	SetPlayerColor(playerid,COLOR_GRAD2);
 	return 1;
 }
+BPR::continuou(playerid){
+	timecont[playerid] = 1;
+	return 1;
+}
+/*BPR::morreu(playerid)
+{
+	//Sistema de Morte
+	new Float:plocx,Float:plocy,Float:plocz;
+	GetPlayerPos(playerid, plocx, plocy, plocz);
+	SetPlayerPos(playerid,plocx,plocy+2, plocz);
+	if(PlayerInfo[playerid][pInt] > 0)
+	{
+		SetPlayerInterior(playerid,PlayerInfo[playerid][pInt]);
+		PlayerInfo[playerid][pInt] = PlayerInfo[playerid][pInt];
+		PlayerInfo[playerid][pLocal] = PlayerInfo[playerid][pLocal];
+	}
+	if(PlayerInfo[playerid][pInt] == 0)
+	{
+		SetPlayerInterior(playerid,0);
+	}
+	if(plocz > 930.0 && PlayerInfo[playerid][pInt] == 0) //the highest land point in sa = 526.8
+	{
+		SetPlayerInterior(playerid,1);
+		PlayerInfo[playerid][pInt] = 1;
+	}
+	return 1;
+}*/
 BPR::OnPlayerSpawn(playerid)
 {
+
 	TextDrawShowForPlayer(playerid, Textdraw0);
     TextDrawShowForPlayer(playerid, Textdraw1);
     TextDrawShowForPlayer(playerid, Textdraw2);
@@ -15045,6 +15082,7 @@ BPR::LoadSBizz()
 //==============================================================================
 BPR::OnGameModeInit()
 {
+	SetTimer("PayDay", 1800000 , true);
 	SetTimer("BotStatus", 1000, true);
 	ShowPlayerMarkers(0);
     SetHora();
@@ -19382,6 +19420,7 @@ BPR::PayDay()
 			PlayerInfo[i][gPupgrade] = PlayerInfo[i][gPupgrade]+2;
 		    GameTextForPlayer(i, "~g~Mais um nivel recebido!", 5000, 1);
 		}
+		printf("Payday Efetuado!");
 	}
 	//return true;
 }
@@ -19803,6 +19842,8 @@ BPR::OnPlayerLogin(playerid,password[])
 		SendClientMessage(playerid, COLOR_WHITE, "Caso precise de ajuda use /relatorio");
 		SendClientMessage(playerid, COLOR_WHITE, "Tenha um otimo RolePlay!");
 		SendClientMessage(playerid, -6, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=");
+		SendClientMessage(playerid, -1,"[{0622c2}DICA{FFFFFF}] Caso queira voltar pra sua posicao use /continuar!");
+		SetTimerEx("continuou", 60000, true, "i", playerid);
 		if (VipCheck(playerid) == 0 && PlayerInfo[playerid][pVIP] > 0)
 		{
 			PlayerInfo[playerid][pVIP] = 0;
@@ -19846,7 +19887,7 @@ BPR::OnPlayerLogin(playerid,password[])
 			format(string2, sizeof(string2), "[BPR]: Voce Logou Como Moderador Level [%d].",PlayerInfo[playerid][pMod]);
 			SendClientMessage(playerid, COLOR_LIGHTBLUE,string2);
 		}
-		format(string2, sizeof(string2), "[AVISO] %s logou no servidor!",PlayerName(playerid));
+		format(string2, sizeof(string2), "[{0622c2}AVISO{FFFFFF}] %s logou no servidor!",PlayerName(playerid));
 		ABroadCast(COLOR_WHITE,string2,1);
 		new str[128];
 		new player[128];
@@ -20165,6 +20206,8 @@ BPR::OnPlayerSave(playerid)
 	{
 		if(gPlayerLogged[playerid])
 		{
+			new Float:cordx, Float:cordy, Float:cordz;
+			GetPlayerPos(playerid, cordx,cordy,cordz);
 			new string3[64];
 			new playername3[MAX_PLAYER_NAME];
 			GetPlayerName(playerid, playername3, sizeof(playername3));
@@ -20237,12 +20280,9 @@ BPR::OnPlayerSave(playerid)
 				format(var, 32, "NivelProcurado=%d\n",WantedPoints[playerid]);fwrite(hFile, var);
 				format(var, 32, "SafeMateriais=%d\n",PlayerInfo[playerid][psMats]);fwrite(hFile, var);
 				format(var, 32, "Gerente=%d\n",PlayerInfo[playerid][pGerente]);fwrite(hFile, var);
-				if ((PlayerInfo[playerid][pPos_x]==0.0 && PlayerInfo[playerid][pPos_y]==0.0 && PlayerInfo[playerid][pPos_z]==0.0))
-				{
-					PlayerInfo[playerid][pPos_x] = 1684.9;
-					PlayerInfo[playerid][pPos_y] = -2244.5;
-					PlayerInfo[playerid][pPos_z] = 13.5;
-				}
+				PlayerInfo[playerid][pPos_x] = cordx;
+				PlayerInfo[playerid][pPos_y] = cordy;
+				PlayerInfo[playerid][pPos_z] = cordz;
 				if(Spectate[playerid] != 255)
 				{
 					PlayerInfo[playerid][pPos_x] = Unspec[playerid][sPx];
@@ -24702,7 +24742,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 		{
 			new vehicle;
 			vehicle = GetPlayerVehicleID(playerid);
-			if(vehicle == CarroPlayer[playerid]) return SendClientMessage(playerid, -1, "Voce nao pode desmanchar um carro seu!");
+			if(vehicle == CarroPlayer[playerid] || vehicle == RetirouCarro1[playerid] || vehicle == RetirouCarro2[playerid] || vehicle == RetirouCarro3[playerid] || vehicle == RetirouCarro4[playerid] || vehicle == BikeSpawn[playerid]) return SendClientMessage(playerid, -1, "Voce nao pode desmanchar um carro seu!");
 	        if(IsPlayerInRangeOfPoint(playerid, 3.0, 2770.0596,-1620.2411,12.8336))
 	    	{
 		    	if(IsPlayerInAnyVehicle(playerid))
@@ -34798,7 +34838,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
             new plo, world;
 			plo = ReturnUser(tmp);
 			world = GetPlayerVirtualWorld(plo);
-			if (PlayerInfo[playerid][pAdmin] >= 4)
+			if (PlayerInfo[playerid][pAdmin] >= 1)
 			{
        			if(admtrampando[playerid] < 1)
 				{
@@ -41401,6 +41441,20 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 	    {
 	        TogglePlayerControllable(playerid, 0);
 	    	ShowPlayerDialog(playerid, 10, DIALOG_STYLE_LIST, "Ajuda", "Ajuda Player\nAjuda Empresa\nAjuda Casa\nAjuda Aluguel\nAjuda Celular\nAjuda Lider\nAjuda Emprego\nAjuda Casamento\nDiscord\nCreditos\nAjuda VIP\n*** Conta VIP ***", "Selecionar", "Cancelar");
+		}
+		return 1;
+	}
+	if(strcmp(cmd, "/continuar", true) == 0){
+		new Float:poscontx = PlayerInfo[playerid][pPos_x];
+		new Float:posconty = PlayerInfo[playerid][pPos_y];
+		new Float:poscontz = PlayerInfo[playerid][pPos_z];
+		if(IsPlayerConnected(playerid)){
+			if(timecont[playerid] != 1){
+				SetPlayerPos(playerid,poscontx, posconty, poscontz);
+				SendClientMessage(playerid, -1, "[{00a613}SUCESSO{FFFFFF}] Voce voltou para seu lugar antigo!");
+				timecont[playerid] = 1;
+			}
+			else return SendClientMessage(playerid, -1, "[{bd0404}ERRO{FFFFFF}] Voce ja continuou ou seu tempo acabou!");
 		}
 		return 1;
 	}
