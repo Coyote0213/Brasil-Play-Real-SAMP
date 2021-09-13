@@ -257,6 +257,8 @@ new TunarOffer[MAX_PLAYERS];
 new TunarPrice[MAX_PLAYERS];
 new FloodAn[MAX_PLAYERS];
 
+new TaMorto[MAX_PLAYERS];
+
 new Text:Text_Disparo0;
 new Text:Text_Disparo1;
 new Text:Text_Disparo2;
@@ -2556,12 +2558,10 @@ forward DCC_OnMessageCreate(DCC_Message:message);
 BPR::DCC_OnMessageCreate(DCC_Message:message){
  
     new DCC_Channel:channel;
- 
     DCC_GetMessageChannel(message, channel);
  
     new DCC_User:author;
     DCC_GetMessageAuthor(message, author);
-
 
     new bool:hasRole;
     DCC_HasGuildMemberRole(guildName, author, adminRole, hasRole);
@@ -2688,7 +2688,7 @@ BPR::DCC_OnMessageCreate(DCC_Message:message){
 	{
 		if(!strcmp(command, "bpr!wladd", true)){
 			new nomeplayer[128];
-			sscanf(params, "u", nomeplayer);
+			sscanf(params, "s", nomeplayer);
 			new file[128];
 			format(file,sizeof(file),"Whitelist/%s.ini",nomeplayer);
 			fopen(file);
@@ -11649,6 +11649,7 @@ BPR::SetPlayerSpawn(playerid)
 //------------------------------------------------------------------------------
 BPR::OnPlayerDeath(playerid, killerid, reason)
 {
+	TaMorto[playerid] = 1;
     new string[256];
     antifakekill[playerid] ++;
     SetTimerEx("antifakekill2", 1000,false,"i",playerid);
@@ -12164,7 +12165,28 @@ BPR::continuou(playerid){
 }*/
 BPR::OnPlayerSpawn(playerid)
 {
-
+	if(TaMorto[playerid] == 1){ 
+		//Sistema de Morte
+		new Float:plocx,Float:plocy,Float:plocz;
+		GetPlayerPos(playerid, plocx, plocy, plocz);
+		SetPlayerPos(playerid,plocx,plocy+2, plocz);
+		if(PlayerInfo[playerid][pInt] > 0)
+		{
+			SetPlayerInterior(playerid,PlayerInfo[playerid][pInt]);
+			PlayerInfo[playerid][pInt] = PlayerInfo[playerid][pInt];
+			PlayerInfo[playerid][pLocal] = PlayerInfo[playerid][pLocal];
+		}
+		if(PlayerInfo[playerid][pInt] == 0)
+		{
+			SetPlayerInterior(playerid,0);
+		}
+		if(plocz > 930.0 && PlayerInfo[playerid][pInt] == 0) //the highest land point in sa = 526.8
+		{
+			SetPlayerInterior(playerid,1);
+			PlayerInfo[playerid][pInt] = 1;
+		}
+		return 1;
+	}
 	TextDrawShowForPlayer(playerid, Textdraw0);
     TextDrawShowForPlayer(playerid, Textdraw1);
     TextDrawShowForPlayer(playerid, Textdraw2);
@@ -13690,7 +13712,8 @@ BPR::OtherTimer()
 				DCC_AddEmbedField(embed, "Player:", playerlog, false);
 				DCC_AddEmbedField(embed, "Motivo:", "Suspeita de Speed hack!", false);
 				DCC_SetEmbedThumbnail(embed, "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
-				DCC_SetEmbedFooter(embed, "Log Brasil Play Real", "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");						DCC_SendChannelEmbedMessage(logKick, embed);
+				DCC_SetEmbedFooter(embed, "Log Brasil Play Real", "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
+				DCC_SendChannelEmbedMessage(logKick, embed);
 				
 				format(gstring, 128, "[{0000FF}ANTI CHEAT{FFFFFF}] %s foi kickado do servidor por suspeita de hack!",PlayerName(i));
 				SendClientMessageToAll(COLOR_WHITE,gstring);
@@ -19251,7 +19274,7 @@ BPR::PayDay()
 	{
 		if(IsPlayerConnected(i) && !IsPlayerNPC(i))
 		{
-		    if(PlayerInfo[i][pLevel] > 0)
+		    if(PlayerInfo[i][pLevel] >= 0)
 		    {
 		    	if(MoneyMessage[i]==1)
 				{
