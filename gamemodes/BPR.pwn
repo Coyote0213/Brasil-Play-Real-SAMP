@@ -1858,7 +1858,7 @@ new NicksProibidos[42][MAX_PLAYER_NAME]  ={
 
 new kickname[MAX_PLAYER_NAME];new sendername[MAX_PLAYER_NAME];new SemAn[MAX_PLAYERS];new PortaooPC;new Float:BusShowLocation[MAX_PLAYERS][4];new BusShowLocationC[MAX_PLAYERS];new BusrouteWest[MAX_PLAYERS][2];new BusrouteEast[MAX_PLAYERS][2];new NomeCarro[128];
 new pFamiliaShelby1, pFamiliaShelby3, acn;new PDEx;new pfdoor; new pfdoor2;new PortaoReporter;new PDDOORa;new PDDOORb;new PDDOORc;new PDPMLS;new PDGARAGE;new PDELEVATOR;new gt3gate;new gt3gate3;new PortaoGov;
-new StreetCall = 999; new Tax = 0;new TaxValue = 0;new Jackpot = 0;new hitfound = 0;new hitid = 999;new Copsronda = 0;new CopsrondaCall = 999;new CopsrondaCallTime[MAX_PLAYERS];new CopsrondaAccepted[MAX_PLAYERS];new Medics = 0;new MedicCall = 999;new MedicCallTime[MAX_PLAYERS];
+new StreetCall = 999; new Tax = 0;new TaxValue = 0;new Jackpot = 0;new hitfound = 0;new hitiid = 999;new Copsronda = 0;new CopsrondaCall = 999;new CopsrondaCallTime[MAX_PLAYERS];new CopsrondaAccepted[MAX_PLAYERS];new Medics = 0;new MedicCall = 999;new MedicCallTime[MAX_PLAYERS];
 new MedicAccepted[MAX_PLAYERS];new Mechanics = 0;new MechanicCall = 999;new MechanicCallTime[MAX_PLAYERS];new MechanicAccepted[MAX_PLAYERS];new TaxiDrivers = 0;new TaxiCall = 999;new TaxiCallTime[MAX_PLAYERS];new TaxiAccepted[MAX_PLAYERS];new BusDrivers = 0;new BusCall = 999;new BusCallTime[MAX_PLAYERS];new BusAccepted[MAX_PLAYERS];new EmRota[MAX_PLAYERS];new TransportDuty[MAX_PLAYERS];new TransportValue[MAX_PLAYERS];new TransportMoney[MAX_PLAYERS];
 new TransportTime[MAX_PLAYERS];new TransportCost[MAX_PLAYERS];new TransportDriver[MAX_PLAYERS];new EmpregoDuty[MAX_PLAYERS];new RegistrationStep[MAX_PLAYERS];new ID[MAX_PLAYERS];new Whitelist[MAX_PLAYERS];new MapIconsShown[MAX_PLAYERS];new UsedFind[MAX_PLAYERS];new WatchingTV[MAX_PLAYERS];
 new NoFuel[MAX_PLAYERS];new MatsHolding[MAX_PLAYERS];new DivorceOffer[MAX_PLAYERS];new MarriageCeremoney[MAX_PLAYERS];new ProposeOffer[MAX_PLAYERS];new ProposedTo[MAX_PLAYERS];new GotProposedBy[MAX_PLAYERS];new MarryWitness[MAX_PLAYERS];new MarryWitnessOffer[MAX_PLAYERS];new TicketOffer[MAX_PLAYERS];new TicketMoney[MAX_PLAYERS];new PlayerStoned[MAX_PLAYERS];new ConsumingMoney[MAX_PLAYERS];
@@ -2331,7 +2331,7 @@ new Float:HouseCarSpawns[291][8] = {
 };
 //>-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //static DCC_Channel:commandChannel;
-static DCC_Channel:chatChannel;
+//static DCC_Channel:chatChannel;
 //Whitelist Channels
 static DCC_Channel:wlChannel;
 static DCC_Channel:wlrChannel;
@@ -2355,7 +2355,7 @@ static DCC_Role:adminRole;
 main()
 {
 	//commandChannel = DCC_FindChannelById("869315453443510282");
-	chatChannel = DCC_FindChannelById("865653977224052757");
+	//chatChannel = DCC_FindChannelById("865653977224052757");
 	cmdChannel = DCC_FindChannelById("885828129732587530");
 	wlChannel = DCC_FindChannelById("869315427153637436");
 	wlrChannel = DCC_FindChannelById("869315438918656060");
@@ -2409,7 +2409,7 @@ BPR::SearchingHit(playerid)
         if(IsPlayerConnected(i)) {
             if(searchhit == 0) {
                 if(PlayerInfo[i][pHeadValue] > 0 && GotHit[i] == 0) {
-                    GetPlayerName(i, giveplayer, sizeof(giveplayer));searchhit = 1;hitfound = 1;hitid = i;
+                    GetPlayerName(i, giveplayer, sizeof(giveplayer));searchhit = 1;hitfound = 1;hitiid = i;
                     for(new k=0; k<MAX_PLAYERS; k++) {
                         if(IsPlayerConnected(k)) {
                             if(GetPlayerOrg(k) == 8 && FH == 1) {
@@ -2497,7 +2497,7 @@ BPR::EsconderQRU(playerid)
 	return 1;
 }
 
-BPR::OnPlayerWeaponShot(playerid, weaponid, hittype, hiteid, Float:fX, Float:fY, Float:fZ)
+BPR::OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
     if(!IsACop(playerid))
     {
@@ -2563,6 +2563,9 @@ BPR::DCC_OnMessageCreate(DCC_Message:message){
     new DCC_User:author;
     DCC_GetMessageAuthor(message, author);
 
+	new bool:isBot;
+    DCC_IsUserBot(author, isBot);
+
     new bool:hasRole;
     DCC_HasGuildMemberRole(guildName, author, adminRole, hasRole);
 
@@ -2575,6 +2578,28 @@ BPR::DCC_OnMessageCreate(DCC_Message:message){
     DCC_GetMessageContent(message, str); 
  
     sscanf(str, "s[32]s[128]", command, params);
+	if(!strcmp(command, "bpr!online", true)){
+		if(isBot) return 1;
+		new stri[128];
+		new adminson[128];
+		new pmson[128];
+		new bandidoson[128];
+		new DCC_Embed:embed = DCC_CreateEmbed();
+		DCC_SetEmbedTitle(embed, "Players Online");
+		DCC_SetEmbedColor(embed, 0xFF0000);
+		format(stri, sizeof stri, "Nós possuimos %d players online!", online);
+		DCC_SetEmbedDescription(embed, stri);
+		format(adminson, sizeof adminson, "`%d`", ContarAdm());
+		DCC_AddEmbedField(embed, "Admins:", adminson, false);
+		format(pmson, sizeof pmson, "`%d`", ContarPM());
+		DCC_AddEmbedField(embed, "Policiais:", pmson, false);
+		format(bandidoson, sizeof bandidoson, "`%d`", ContarBandido());
+		DCC_AddEmbedField(embed, "Bandidos:", bandidoson, false);
+		DCC_SetEmbedThumbnail(embed, "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
+		DCC_SetEmbedFooter(embed, "Bot Brasil Play Real", "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
+		DCC_SendChannelEmbedMessage(channel, embed);
+		return 1;
+	}
 	if(channel == cmdChannel){
 		if(!strcmp(command, "bpr!pv", true)){
 			if(!hasRole){
@@ -2590,10 +2615,9 @@ BPR::DCC_OnMessageCreate(DCC_Message:message){
 			new pvstring[128];
 			format(pvstring, sizeof(pvstring), "[{0000ff}MENSAGEM DISCORD{FFFFFF}] %s", _message);
 			SendClientMessage(playerID, -1, pvstring);
-		}
-
-		if(!strcmp(command, "bpr!desbug", true)){
-			return 1;
+			new dsstring[128];
+			format(dsstring, sizeof(dsstring), "Você enviou a mensagem **%s** para **%s**", _message, PlayerName(playerID));
+			DCC_SendChannelMessage(channel, dsstring);
 		}
 
 		if(!strcmp(command, "bpr!kick", true)){
@@ -2612,7 +2636,7 @@ BPR::DCC_OnMessageCreate(DCC_Message:message){
 			SendClientMessageToAll(COLOR_LIGHTRED, kickstring);
 
 			new dsstring[128];
-			format(dsstring, sizeof(dsstring), "%s foi kickado com sucesso! Motivo: %s", PlayerName(playerID), _message);
+			format(dsstring, sizeof(dsstring), "**%s** foi kickado com sucesso! Motivo: **__%s__**", PlayerName(playerID), _message);
 			DCC_SendChannelMessage(channel, dsstring);
 			SetTimerEx("KickarWL", 1000, 0, "i", playerID);
 			return 1;
@@ -2625,6 +2649,9 @@ BPR::DCC_OnMessageCreate(DCC_Message:message){
 			new string[128];
 			format(string, sizeof(string), "[{0000FF}AVISO DISCORD{FFFFFF}] - %s", params);
 			SendClientMessageToAll(-1, string);
+			new Str[999];
+			format(Str,sizeof(Str),"Você enviou a mensagem **%s** para **%d** players!",params, online);
+			DCC_SendChannelMessage(channel, Str);
 		}
 		if(!strcmp(command, "bpr!gerarcodigo", true)){
 			if(!hasRole){
@@ -2667,10 +2694,6 @@ BPR::DCC_OnMessageCreate(DCC_Message:message){
 			return 1;
 		}
 		if(!strcmp(command, "bpr!gmx", true)){
-			if(channel != chatChannel){
-				return 1;
-			}
-
 			if(!hasRole){
 				return 1;
 			}
@@ -13449,17 +13472,20 @@ BPR::OnPlayerRequestClass(playerid, classid)
 	if (Whitelist[playerid] == 0 && gPlayerLogged[playerid] != 1)
 	{
  		new plname[MAX_PLAYER_NAME];
+		new wldia[128];
         PlayerPlaySound(playerid, 1076, 0.0, 0.0, 0.0);
 		ClearChatbox(playerid, 10);
 		GetPlayerName(playerid, plname, sizeof(plname));
 		format(gstring, 64, "Whitelist/%s.ini", plname);
         if(fexist(gstring))
 		{
-		    ShowPlayerDialog(playerid, 5062, DIALOG_STYLE_MSGBOX, "Aviso {FFFFFF}Brasil {0000FF}Play {FFFFFF}Real", "O seu nome nao se encontra em nossa Whitelist, caso isso seja um erro entre em contato com algum Staff em nosso Discord!", "Entendido", "Cancelar");
+			SendClientMessage(playerid, -1, "[{0000FF}WHITELIST{FFFFFF}] Voce foi autorizado a logar!");
+		    //ShowPlayerDialog(playerid, 5062, DIALOG_STYLE_MSGBOX, "Aviso {FFFFFF}Brasil {0000FF}Play {FFFFFF}Real", "O seu nome nao se encontra em nossa Whitelist, caso isso seja um erro entre em contato com algum Staff em nosso Discord!", "Entendido", "Cancelar");
 		}
 		else
 		{
-			ShowPlayerDialog(playerid, 5062, DIALOG_STYLE_MSGBOX, "Aviso {FFFFFF}Brasil {0000FF}Play {FFFFFF}Real", "O seu nome nao se encontra em nossa Whitelist, caso isso seja um erro entre em contato com algum Staff em nosso Discord!", "Entendido", "Cancelar");
+			format(wldia, sizeof(wldia), "{FFFFFF}O seu nome {FF0000}%s{FFFFFF} nao se encontra em nossa Whitelist, caso isso seja um erro entre em contato com algum Staff em nosso Discord!", plname);
+			ShowPlayerDialog(playerid, 5062, DIALOG_STYLE_MSGBOX, "Aviso {0000FF}Brasil {FFFFFF}Play {0000FF}Real", wldia, "Entendido", "Cancelar");
 			SetTimerEx("KickarWL", 1000, 0, "i", playerid);
 			return 1;
 		}
@@ -15417,6 +15443,8 @@ BPR::OnGameModeInit()
     Create3DTextLabel("Crack\nUse /pegardrogas crack",COR_3DLABEL,2152.4707,-1013.1613,62.4262,15.0,0);
     Create3DTextLabel("Crack\nUse /pegardrogas crack",COR_3DLABEL,-2994.1809,471.5032,4.6881,15.0,0);
     Create3DTextLabel("Menu de Compras\nAperte Enter Para Usar",COR_3DLABEL,1101.9640,-1373.0610,13.7591,15.0,0);
+	Create3DTextLabel("Menu de Compras\nAperte Enter Para Usar",COR_3DLABEL,1026.1563,-1998.4005,13.1968,15.0,0);
+	Create3DTextLabel("Menu de Compras\nAperte Enter Para Usar",COR_3DLABEL,836.3600,-2059.2261,12.8752,15.0,0);
 	Create3DTextLabel("Menu de Compras\nAperte Enter Para Usar",COR_3DLABEL,-26.8819,-89.6936,1003.5469,15.0,0);
 	Create3DTextLabel("Menu de Compras\nAperte Enter Para Usar",COR_3DLABEL,-22.2540,-55.6456,1003.5469,15.0,0);
     Create3DTextLabel("Menu de Compras\nAperte Enter Para Usar",COR_3DLABEL,-22.3265,-138.4765,1003.5469,15.0,0);
@@ -15686,6 +15714,8 @@ BPR::OnGameModeInit()
     AddStaticPickup(351,23,295.7041,-80.3617,1001.5156); // Ammu Nation
     AddStaticPickup(1241,23,-22.2540,-55.6456,1003.5469); // loja 24/7
     AddStaticPickup(1241,23, 1101.9640,-1373.0610,13.7591); // loja 24/7
+	AddStaticPickup(1241,23, 1026.1563,-1998.4005,13.1968); // loja 24/7
+	AddStaticPickup(1241,23, 836.3600,-2059.2261,12.8752); // loja 24/7
     AddStaticPickup(1241,23,-26.8819,-89.6936,1003.5469); // loja 24/7
     AddStaticPickup(1241,23,-22.3265,-138.4765,1003.5469); // loja 24/7
     AddStaticPickup(1241,23,-30.3140,-28.3121,1003.5573); // loja 24/7
@@ -19339,7 +19369,7 @@ BPR::PayDay()
 			    if(PlayerInfo[i][pVIP] == 1) { tmpintrate = 3; }
 			    else if(PlayerInfo[i][pVIP] == 2) { tmpintrate = 4; }
 				else { tmpintrate = 1; }
-				if(PlayerInfo[i][pPayDay] >= 3)
+				if(PlayerInfo[i][pPayDay] >= 0)
 				{
 				    Tax += TaxValue;//Shorld work for every player online
 				    PlayerInfo[i][pConta] -= TaxValue;
@@ -20685,7 +20715,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 	     	SendClientMessage(playerid, COLOR_WHITE,Str);
 	     	//Mensagem no chat para todos
 	     	new WLMessage[999];
-	     	format(WLMessage,sizeof(WLMessage),"{0000FF}AVISO:{FFFFFF} O usuario %s foi adicionado na Whitelist por %s", tmp, PlayerName(playerid));
+	     	format(WLMessage,sizeof(WLMessage),"[{0000FF}WHITELIST{FFFFFF}] O usuario %s foi adicionado na Whitelist por %s", tmp, PlayerName(playerid));
 	     	SendClientMessageToAll(COLOR_WHITE,WLMessage);
 			//Pasta logs/Whitelist.log
 	     	format(string, 128, "%s adicionou %s na Whitelist\n", PlayerName(playerid), tmp);
@@ -33944,7 +33974,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 							SendClientMessage(para1, COLOR_LIGHTBLUE, string);
 						}
 						SendClientMessage(para1, COLOR_LIGHTBLUE,"Setado com sucesso!");
-						format(string, sizeof(string), "%s foi setado com sucesso na org!", giveplayer);
+						format(string, sizeof(string), "%s foi setado com sucesso na org!", PlayerName(para1));
                         SendClientMessage(playerid, COLOR_LIGHTBLUE, string);
                         //format(string, sizeof(string), "ADMIN: %s deu li9der da org:[%s] para %s.", sendername, NomeORG(level), giveplayer);
                         //ideresLog(string);
@@ -33957,6 +33987,29 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 						ConviteInfoOrg(PlayerName(playerid), InviteJob[playerid], 1);
 					    //SetPlayerSkin(para1, PlayerInfo[para1][pSkin]);
 					    SetPlayerSpawn(para1);
+
+						new str[128];
+						new usuario[128];
+						new adicionado[128];
+						new org[128];
+						new DCC_Embed:embed = DCC_CreateEmbed();
+						DCC_SetEmbedTitle(embed, "Log Set Membros");
+						DCC_SetEmbedColor(embed, 0xFF0000);
+						format(str, sizeof str, "Alguém foi adicionado em alguma org!");
+						DCC_SetEmbedDescription(embed, str);
+
+						format(usuario, sizeof usuario, "`%s`", PlayerName(playerid));
+						DCC_AddEmbedField(embed, "Staff:", usuario, false);
+
+						format(adicionado, sizeof adicionado, "`%s`", PlayerName(para1));
+						DCC_AddEmbedField(embed, "Usuário Adicionado:", adicionado, false);
+
+						format(org, sizeof org, "`%s`", NomeORG(level));
+						DCC_AddEmbedField(embed, "Organização:", org, false);
+
+						DCC_SetEmbedThumbnail(embed, "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
+						DCC_SetEmbedFooter(embed, "Log Brasil Play Real", "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
+						DCC_SendChannelEmbedMessage(logCMDAdmin, embed);
 					}
 				}
 			}
@@ -50479,17 +50532,17 @@ BPR::OnPlayerText(playerid, text[])
 				        SendClientMessage(playerid, COLOR_GREY, "   Esse assasino ja possui um contrato!");
 						return 0;
 				    }
-				    if(IsPlayerConnected(hitid))
+				    if(IsPlayerConnected(hitiid))
 				    {
 				        GetPlayerName(playerid, sendername, sizeof(sendername));
 				        GetPlayerName(giveplayerid, giver, sizeof(giver));
-				        GetPlayerName(hitid, giveplayer, sizeof(giveplayer));
-		    			format(string, sizeof(string), "* Assasino %s, deu um contrato para %s matar: %s(ID:%d), por R$%d.", sendername, giver, giveplayer, hitid, PlayerInfo[hitid][pHeadValue]);
+				        GetPlayerName(hitiid, giveplayer, sizeof(giveplayer));
+		    			format(string, sizeof(string), "* Assasino %s, deu um contrato para %s matar: %s(ID:%d), por R$%d.", sendername, giver, giveplayer, hitiid, PlayerInfo[hitiid][pHeadValue]);
 		    			SendFamilyMessage(GetPlayerOrg(playerid), COLOR_YELLOW, string);
-		    			GoChase[giveplayerid] = hitid;
-		    			GetChased[hitid] = giveplayerid;
-		    			GotHit[hitid] = 1;
-		    			hitid = 0;
+		    			GoChase[giveplayerid] = hitiid;
+		    			GetChased[hitiid] = giveplayerid;
+		    			GotHit[hitiid] = 1;
+		    			hitiid = 0;
 		    			hitfound = 0;
 				        return 0;
 				    }
@@ -52223,7 +52276,8 @@ BPR::OnPlayerKeyStateChange(playerid,newkeys,oldkeys)
     	}
     	if (PlayerToPoint(2.0, playerid, -26.8819,-89.6936,1003.5469) || PlayerToPoint(2.0, playerid, -22.2540,-55.6456,1003.5469)
     	|| PlayerToPoint(2.0, playerid, -22.3265,-138.4765,1003.5469) || PlayerToPoint(2.0, playerid, -30.3140,-28.3121,1003.5573)
-		|| PlayerToPoint(2.0, playerid, 1101.9957,-1373.0579,13.7591))
+		|| PlayerToPoint(2.0, playerid, 1101.9957,-1373.0579,13.7591) || PlayerToPoint(2.0, playerid, 1026.1563,-1998.4005,13.1968)
+		|| PlayerToPoint(2.0, playerid, 836.3600,-2059.2261,12.8752))
     	{
     	    Controle(playerid, 0);
 			ShowPlayerDialog(playerid, 5, DIALOG_STYLE_LIST, "Mercado 24/7", "Celular - R$100\nAgenda - R$2\nDado - R$2\nCamisinha - R$2\nCD-Player - R$2\nFrango - R$10\nHamburguer - R$10\nPizza - R$10", "Confirmar", "Cancelar");
