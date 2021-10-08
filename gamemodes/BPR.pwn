@@ -14,6 +14,7 @@
 #include <discord-connector>
 #include <sscanf2>
 #include <discord-cmd>
+#include <td-actions>
 //>-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #define SVNOME "hostname Brasil Play Real RolePlay [VOIP ON]"
 #define MPNOME "mapname Whitelist on"
@@ -257,7 +258,18 @@ new TunarOffer[MAX_PLAYERS];
 new TunarPrice[MAX_PLAYERS];
 new FloodAn[MAX_PLAYERS];
 
-new TaMorto[MAX_PLAYERS];
+new TirarLife[MAX_PLAYERS];
+new Float:MX,Float:MY,Float:MZ;
+new Agonizando[MAX_PLAYERS];
+new PodeReviver[MAX_PLAYERS];
+
+new Text:Text_Morte0;
+new Text:Text_Morte1;
+new Text:Text_Morte2;
+new Text:Text_Morte3;
+new Text:Text_Morte4;
+new PlayerText:Text_MorteP[MAX_PLAYERS];
+
 
 new Text:Text_Disparo0;
 new Text:Text_Disparo1;
@@ -2377,12 +2389,10 @@ main()
     adminRole = DCC_FindRoleById("865653598808965171");
 	//staffRole = DCC_FindRoleById("879883423097970708");
 
-	print("************************************");
-	print("*[<<<**************************>>>]*");
-	print("*|    Brasil Play Real RP    |*");
-	print("*|         Por Logan_Walker     |*");
-	print("*[<<<**************************>>>]*");
-	print("************************************");
+	print("\tAVISO");
+	print("GAMEMODE BRASIL PLAY REAL ONLINE");
+	print("Feita por Coyote");
+	print("Base: Brasil Universal Life");
 }
 //>-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 BPR::ABroadCastah(COLOR,const string[],level)
@@ -2467,6 +2477,72 @@ BPR::CriarID(playerid)
 	return 1;
 }
 
+Action:ActionGuardar(playerid, response)
+{
+	if (response == ACTION_RESPONSE_YES)
+	{
+		if(IsPlayerConnected(playerid))
+ 		{
+ 		    new getcarid;
+	        new VID;
+		    VID = GetPlayerVehicleID(playerid);
+		    getcarid = GetPlayerVehicleID(playerid);
+            if(IsPlayerInAnyVehicle(playerid))
+       		{
+       		    if(GetPlayerState(playerid) == 2)
+       		    {
+       		        if(getcarid == BikeSpawn[playerid])
+       		        {
+       		            BikeSpawn[playerid] = -1;
+						DestroyVehicle(VID);
+						SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
+					}
+					else if(getcarid == CarroPlayer[playerid])
+       		        {
+       		            CarroPlayer[playerid] = -1;
+						DestroyVehicle(VID);
+						SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
+					}
+					else if(getcarid == RetirouCarro1[playerid])
+       		        {
+       		            RetirouCarro1[playerid] = 0;
+						DestroyVehicle(VID);
+						SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
+					}
+					else if(getcarid == RetirouCarro2[playerid])
+       		        {
+       		            RetirouCarro2[playerid] = 0;
+						DestroyVehicle(VID);
+						SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
+					}
+					else if(getcarid == RetirouCarro3[playerid])
+       		        {
+       		            RetirouCarro3[playerid] = 0;
+						DestroyVehicle(VID);
+						SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
+					}
+					else if(getcarid == RetirouCarro4[playerid])
+       		        {
+       		            RetirouCarro4[playerid] = 0;
+						DestroyVehicle(VID);
+						SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
+					}
+					else
+					{
+					    SetVehicleToRespawn(VID);
+					    SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
+					}
+				}
+				else return SendClientMessage(playerid, COLOR_WHITE, "Voce nao e o motorista do veiculo!");
+       		}
+       		else return SendClientMessage(playerid, COLOR_WHITE, "Voce nao esta em um carro!");
+		}
+	} else {
+		SendClientMessage(playerid, -1, "Voce escolheu nao guardar seu carro!");
+	}
+	return 1;
+}
+
 BPR::Desmanche(playerid)
 {
        DestroyVehicle(GetPlayerVehicleID(playerid));
@@ -2494,6 +2570,19 @@ BPR::EsconderQRU(playerid)
 			}
 		}
 	}
+	return 1;
+}
+
+forward EsconderMorte(playerid);
+BPR::EsconderMorte(playerid)
+{
+	TextDrawHideForPlayer(playerid, Text_Morte0);
+	TextDrawHideForPlayer(playerid, Text_Morte1);
+	TextDrawHideForPlayer(playerid, Text_Morte2);
+	TextDrawHideForPlayer(playerid, Text_Morte3);
+	TextDrawHideForPlayer(playerid, Text_Morte4);
+	PlayerTextDrawHide(playerid, Text_MorteP[playerid]);
+	CancelSelectTextDraw(playerid);
 	return 1;
 }
 
@@ -10081,6 +10170,7 @@ BPR::OnPlayerConnect(playerid)
 	{
 		gPlayerConta[playerid] = 0;
 	}
+
 	velo[playerid][1] = CreatePlayerTextDraw(playerid,383.000000, 361.000000, "0 ~w~km/h");
 	PlayerTextDrawAlignment(playerid,velo[playerid][1], 3);
 	PlayerTextDrawBackgroundColor(playerid,velo[playerid][1], 255);
@@ -10701,6 +10791,20 @@ BPR::OnPlayerConnect(playerid)
 	PlayerTextDrawBackgroundColor(playerid, Dinheirop[playerid], 255);
 	PlayerTextDrawFont(playerid, Dinheirop[playerid], 1);
 	PlayerTextDrawSetProportional(playerid, Dinheirop[playerid], 1);
+
+	Text_MorteP[playerid] = CreatePlayerTextDraw(playerid, 249.707107, 227.333328, "box");
+	PlayerTextDrawLetterSize(playerid, Text_MorteP[playerid], 0.000000, 5.877014);
+	PlayerTextDrawTextSize(playerid, Text_MorteP[playerid], 391.000000, 0.000000);
+	PlayerTextDrawAlignment(playerid, Text_MorteP[playerid], 1);
+	PlayerTextDrawColor(playerid, Text_MorteP[playerid], -1);
+	PlayerTextDrawUseBox(playerid, Text_MorteP[playerid], 1);
+	PlayerTextDrawBoxColor(playerid, Text_MorteP[playerid], 65535);
+	PlayerTextDrawSetShadow(playerid, Text_MorteP[playerid], 0);
+	PlayerTextDrawBackgroundColor(playerid, Text_MorteP[playerid], 255);
+	PlayerTextDrawFont(playerid, Text_MorteP[playerid], 1);
+	PlayerTextDrawSetProportional(playerid, Text_MorteP[playerid], 1);
+	PlayerTextDrawSetSelectable(playerid, Text_MorteP[playerid], true);
+	PlayerTextDrawTextSize(playerid, Text_MorteP[playerid], 359.000000, 20.000000);
 	return true;
 }
 //>-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -11672,7 +11776,8 @@ BPR::SetPlayerSpawn(playerid)
 //------------------------------------------------------------------------------
 BPR::OnPlayerDeath(playerid, killerid, reason)
 {
-	TaMorto[playerid] = 1;
+	Agonizando[playerid] = 1;
+	GetPlayerPos(playerid, MX, MY, MZ);
     new string[256];
     antifakekill[playerid] ++;
     SetTimerEx("antifakekill2", 1000,false,"i",playerid);
@@ -12186,30 +12291,55 @@ BPR::continuou(playerid){
 	}
 	return 1;
 }*/
+forward OnPlayerDeathAT(playerid);
+public OnPlayerDeathAT(playerid)
+{
+    if(Agonizando[playerid] == 1)
+    {
+        SetPlayerPos(playerid, MX,MY,MZ);
+        ApplyAnimation(playerid, "CRACK", "crckdeth2", 4.0, 1, 0, 0, 0, 0, 1);
+        ApplyAnimation(playerid, "CRACK", "crckdeth2", 4.0, 1, 0, 0, 0, 0, 1);
+        SendClientMessage(playerid, -1, "[{0622c2}AVISO{FFFFFF}] Voce esta desmaiado!");
+		SendClientMessage(playerid, -1, "Aguarde 1 minuto para voltar ao hospital!");
+		/*TextDrawShowForPlayer(playerid, Text_Morte0);
+		TextDrawShowForPlayer(playerid, Text_Morte1);
+		TextDrawShowForPlayer(playerid, Text_Morte2);
+		TextDrawShowForPlayer(playerid, Text_Morte3);
+		PlayerTextDrawShow(playerid, Text_MorteP[playerid]);
+		TextDrawShowForPlayer(playerid, Text_Morte4);
+		SelectTextDraw(playerid, 0xFF0000FF);*/
+        TirarLife[playerid] = SetTimerEx("AgonizandoLife", 90000, true, "i", playerid);
+    }
+    return 1;
+}
+forward AgonizandoLife(playerid);
+public AgonizandoLife(playerid)
+{
+    /*new Float:health;
+    GetPlayerHealth(playerid, health);
+    if(Agonizando[playerid] == 1)
+    {
+        if(health >= 11){
+            SetPlayerHealth(playerid, health-1.5);
+        }
+        if(health <= 10)
+        {
+            SetPlayerHealth(playerid, 4);
+            SetPlayerPos(playerid, 2026.3627,-1404.6978,17.2204);
+            SetPlayerFacingAngle(playerid, 167.3707);
+            ApplyAnimation(playerid, "CRACK", "crckdeth2", 4.1, 1, 0, 0, 0, 0, 1);
+            ApplyAnimation(playerid, "CRACK", "crckdeth2", 4.1, 1, 0, 0, 0, 0, 1);
+            KillTimer(TirarLife[playerid]);
+			Agonizando[playerid] = 0;
+        }
+    }*/
+	PodeReviver[playerid] = 1;
+	SendClientMessage(playerid, -1, "Use /renascer para voltar ao hospital!");
+    return 1;
+}
 BPR::OnPlayerSpawn(playerid)
 {
-	if(TaMorto[playerid] == 1){ 
-		//Sistema de Morte
-		new Float:plocx,Float:plocy,Float:plocz;
-		GetPlayerPos(playerid, plocx, plocy, plocz);
-		SetPlayerPos(playerid,plocx,plocy+2, plocz);
-		if(PlayerInfo[playerid][pInt] > 0)
-		{
-			SetPlayerInterior(playerid,PlayerInfo[playerid][pInt]);
-			PlayerInfo[playerid][pInt] = PlayerInfo[playerid][pInt];
-			PlayerInfo[playerid][pLocal] = PlayerInfo[playerid][pLocal];
-		}
-		if(PlayerInfo[playerid][pInt] == 0)
-		{
-			SetPlayerInterior(playerid,0);
-		}
-		if(plocz > 930.0 && PlayerInfo[playerid][pInt] == 0) //the highest land point in sa = 526.8
-		{
-			SetPlayerInterior(playerid,1);
-			PlayerInfo[playerid][pInt] = 1;
-		}
-		return 1;
-	}
+	SetTimerEx("OnPlayerDeathAT", 1000, false, "i", playerid);
 	TextDrawShowForPlayer(playerid, Textdraw0);
     TextDrawShowForPlayer(playerid, Textdraw1);
     TextDrawShowForPlayer(playerid, Textdraw2);
@@ -12379,7 +12509,7 @@ BPR::OnPlayerSpawn(playerid)
 		else { PlayerInfo[playerid][pSkin] = 40; SetPlayerSkin(playerid, PlayerInfo[playerid][pSkin]); }
 	}
 	SetPlayerWeapons(playerid);
-	SetPlayerSpawn(playerid);
+	if(Agonizando[playerid] != 1) { SetPlayerSpawn(playerid); }
 	SetPlayerToTeamColor(playerid);
 	PlayerFixRadio(playerid);
 	
@@ -19241,8 +19371,68 @@ BPR::OnGameModeInit()
 	DCC_SetEmbedThumbnail(embed, "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
 	DCC_SetEmbedFooter(embed, "Atenciosamente, Equipe Brasil Play Real", "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
 	//DCC_SendChannelEmbedMessage(g_WelcomeChannelId, embed);
+
+	Text_Morte0 = TextDrawCreate(3.265011, 82.083297, "box");
+	TextDrawLetterSize(Text_Morte0, 0.000000, 26.866760);
+	TextDrawTextSize(Text_Morte0, 667.000000, 0.000000);
+	TextDrawAlignment(Text_Morte0, 1);
+	TextDrawColor(Text_Morte0, -1);
+	TextDrawUseBox(Text_Morte0, 1);
+	TextDrawBoxColor(Text_Morte0, 114);
+	TextDrawSetShadow(Text_Morte0, 0);
+	TextDrawBackgroundColor(Text_Morte0, 68);
+	TextDrawFont(Text_Morte0, 1);
+	TextDrawSetProportional(Text_Morte0, 1);
+	TextDrawSetSelectable(Text_Morte0, true);
+
+	Text_Morte1 = TextDrawCreate(162.093734, 159.083297, "Aguarde_2_minutos_para_poder_voltar_ao_hospital");
+	TextDrawLetterSize(Text_Morte1, 0.400000, 1.600000);
+	TextDrawAlignment(Text_Morte1, 1);
+	TextDrawColor(Text_Morte1, -1);
+	TextDrawSetShadow(Text_Morte1, 0);
+	TextDrawBackgroundColor(Text_Morte1, 255);
+	TextDrawFont(Text_Morte1, 1);
+	TextDrawSetProportional(Text_Morte1, 1);
+
+	Text_Morte2 = TextDrawCreate(237.994110, 98.416633, "DESMAIADO");
+	TextDrawLetterSize(Text_Morte2, 0.717657, 3.950833);
+	TextDrawAlignment(Text_Morte2, 1);
+	TextDrawColor(Text_Morte2, -16776961);
+	TextDrawSetShadow(Text_Morte2, 4);
+	TextDrawBackgroundColor(Text_Morte2, 255);
+	TextDrawFont(Text_Morte2, 2);
+	TextDrawSetProportional(Text_Morte2, 1);
+
+	Text_Morte3 = TextDrawCreate(163.030746, 184.166702, "ou_aguarde_os_paramedicos_chegarem!");
+	TextDrawLetterSize(Text_Morte3, 0.400000, 1.600000);
+	TextDrawAlignment(Text_Morte3, 1);
+	TextDrawColor(Text_Morte3, -1);
+	TextDrawSetShadow(Text_Morte3, 0);
+	TextDrawBackgroundColor(Text_Morte3, 255);
+	TextDrawFont(Text_Morte3, 1);
+	TextDrawSetProportional(Text_Morte3, 1);
+
+	Text_Morte4 = TextDrawCreate(260.014770, 236.666656, "Retornar");
+	TextDrawLetterSize(Text_Morte4, 0.534465, 2.860000);
+	TextDrawAlignment(Text_Morte4, 1);
+	TextDrawColor(Text_Morte4, -1);
+	TextDrawSetShadow(Text_Morte4, 102);
+	TextDrawSetOutline(Text_Morte4, 1);
+	TextDrawBackgroundColor(Text_Morte4, 255);
+	TextDrawFont(Text_Morte4, 2);
+	TextDrawSetProportional(Text_Morte4, 1);
 	return 1;
 
+}
+
+BPR::OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
+{
+    if(playertextid == Text_MorteP[playerid])
+    {
+		OnPlayerCommandText(playerid,"/renascer");
+		EsconderMorte(playerid);
+    }
+    return 1;
 }
 
 BPR::SyncTime()
@@ -35054,6 +35244,120 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 		else return SendClientMessage(playerid, COLOR_WHITE, "Voce nao pode usar esse comando!");
 		return 1;
 	}
+	/*if(strcmp(cmd, "/snc", true) == 0)
+	{
+    new Float:Xnc,Float:Ync,Float:Znc,Float:Rnc;
+    if(PlayerInfo[playerid][pAdmin] <= 1) return SendClientMessage(playerid, -1, "SERVER: Voce Nao Tem Acesso a Esse Comando.");
+    {
+        if(admtrampando[playerid] < 1) return SendClientMessage(playerid, -1, "{FF0000}ERRO | Voce Nao Esta Trabalhando.");
+        {
+            if(IsCreating[playerid])
+            {
+                CancelFlyMode(playerid);
+                IsCreating[playerid] = false;
+                noclipdata[playerid][cameramode]     = CAMERA_MODE_NONE;
+                noclipdata[playerid][lrold]                = 0;
+                noclipdata[playerid][udold]           = 0;
+                noclipdata[playerid][mode]           = 0;
+                noclipdata[playerid][lastmove]       = 0;
+                noclipdata[playerid][accelmul]       = 0.0;
+                IsCreating[playerid]                 = false;
+                IsReSettingStart[playerid]             = false;
+                IsReSettingEnd[playerid]             = false;
+                SettingFirstLoc[playerid]             = false;
+                SettingLastLoc[playerid]             = false;
+                IsCamMoving[playerid]                 = false;
+                coordInfo[playerid][MoveSpeed]         = 1000;
+                coordInfo[playerid][RotSpeed]         = 1000;
+                GetPlayerPos(playerid, Xnc,Ync,Znc);
+                GetPlayerFacingAngle(playerid, Rnc);
+                SetPlayerPos(playerid, Xnc,Ync,Znc);
+                SetPlayerFacingAngle(playerid, Rnc);
+            }
+        }
+    }
+    return 1;
+}*/
+
+	if(strcmp(cmd, "/renascer", true) == 0)
+	{
+		if(Agonizando[playerid] == 1){
+			if(PodeReviver[playerid] == 1){
+				PodeReviver[playerid] = 0;
+				SetPlayerHealth(playerid, 100);
+				SetPlayerPos(playerid, 2026.3627,-1404.6978,17.2204);
+				KillTimer(TirarLife[playerid]);
+				SendClientMessage(playerid, COLOR_WHITE, "Voce escolheu voltar para o hospital!");
+			}
+			else {
+				/*TextDrawShowForPlayer(playerid, Text_Morte0);
+				TextDrawShowForPlayer(playerid, Text_Morte1);
+				TextDrawShowForPlayer(playerid, Text_Morte2);
+				TextDrawShowForPlayer(playerid, Text_Morte3);
+				PlayerTextDrawShow(playerid, Text_MorteP[playerid]);
+				TextDrawShowForPlayer(playerid, Text_Morte4);
+				SelectTextDraw(playerid, 0xFF0000FF);*/
+				SendClientMessage(playerid, COLOR_LIGHTRED, "ERRO - {FFFFFF}Voce ainda nao pode voltar ao hospital!");
+			}
+		}
+		else return SendClientMessage(playerid, -1, "Voce nao esta morto");
+		return true;
+	}
+
+	if(strcmp(cmd, "/reviver", true) == 0  || strcmp(cmd, "/god", true) == 0)
+	{
+	    if(IsPlayerConnected(playerid))
+	    {
+			tmp = strtok(cmdtext, idx);
+			if(!strlen(tmp))
+			{
+				SendClientMessage(playerid, COLOR_GRAD2, "USE: /reviver [id]");
+				return true;
+			}
+			new plo;
+			plo = ReturnUser(tmp);
+			//world = GetPlayerVirtualWorld(plo);
+			if (IsPlayerConnected(plo))
+			{
+			    if(plo != INVALID_PLAYER_ID)
+			    {
+					if (PlayerInfo[playerid][pAdmin] >= 1)
+					{
+         				if(admtrampando[playerid] < 1)
+						{
+							SendClientMessage(playerid, COLOR_GRAD1, "Voce nao esta trabalhando! (/tra)");
+							return true;
+						}
+
+						if(Agonizando[plo] != 1) return SendClientMessage(playerid, -1, "Esse player nao esta morto!");
+
+						KillTimer(TirarLife[plo]);
+						ClearAnimations(plo);
+						SetPlayerHealth(plo, 100);
+						Agonizando[plo] = 0;
+						EsconderMorte(plo);
+
+						new pstring[128], sstring[128];
+
+						format(pstring, sizeof(pstring), "Voce foi revivido pelo Staff %s", PlayerName(playerid));
+						SendClientMessage(plo, -1, pstring);
+
+						format(sstring, sizeof(sstring), "Voce reviveu o player %s", PlayerName(plo));
+						SendClientMessage(playerid, -1, sstring);
+					}
+					else
+					{
+						SendClientMessage(playerid, COLOR_GRAD1, "   Voce nao esta autorizado a usar este comando!");
+					}
+				}
+			}
+			else
+			{
+				SendClientMessage(playerid, COLOR_GRAD1, "   Esse nao e um player ativo.");
+			}
+		}
+		return true;
+	}
 	
 	if(strcmp(cmd, "/ir", true) == 0)
 	{
@@ -35260,62 +35564,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 	
 	if (strcmp(cmd, "/guardar", true) == 0)
 	{
-		if(IsPlayerConnected(playerid))
- 		{
- 		    new getcarid;
-	        new VID;
-		    VID = GetPlayerVehicleID(playerid);
-		    getcarid = GetPlayerVehicleID(playerid);
-            if(IsPlayerInAnyVehicle(playerid))
-       		{
-       		    if(GetPlayerState(playerid) == 2)
-       		    {
-       		        if(getcarid == BikeSpawn[playerid])
-       		        {
-       		            BikeSpawn[playerid] = -1;
-						DestroyVehicle(VID);
-						SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
-					}
-					else if(getcarid == CarroPlayer[playerid])
-       		        {
-       		            CarroPlayer[playerid] = -1;
-						DestroyVehicle(VID);
-						SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
-					}
-					else if(getcarid == RetirouCarro1[playerid])
-       		        {
-       		            RetirouCarro1[playerid] = 0;
-						DestroyVehicle(VID);
-						SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
-					}
-					else if(getcarid == RetirouCarro2[playerid])
-       		        {
-       		            RetirouCarro2[playerid] = 0;
-						DestroyVehicle(VID);
-						SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
-					}
-					else if(getcarid == RetirouCarro3[playerid])
-       		        {
-       		            RetirouCarro3[playerid] = 0;
-						DestroyVehicle(VID);
-						SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
-					}
-					else if(getcarid == RetirouCarro4[playerid])
-       		        {
-       		            RetirouCarro4[playerid] = 0;
-						DestroyVehicle(VID);
-						SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
-					}
-					else
-					{
-					    SetVehicleToRespawn(VID);
-					    SendClientMessage(playerid, COLOR_WHITE, "Seu veiculo foi guardado com sucesso!");
-					}
-				}
-				else return SendClientMessage(playerid, COLOR_WHITE, "Voce nao e o motorista do veiculo!");
-       		}
-       		else return SendClientMessage(playerid, COLOR_WHITE, "Voce nao esta em um carro!");
-		}
+		ShowActionForPlayer(playerid, ActionGuardar, "Voce realmente deseja guardar seu carro?\n\nEle sera levado para a garagem!", .action_time = 10000);
 		return 1;
 	}
 //==============================================================================
@@ -36027,7 +36276,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
         return 1;
     }
 
-	if(strcmp(cmd, "/veh", true) == 0)
+	if(strcmp(cmd, "/veh", true) == 0  || strcmp(cmd, "/car", true) == 0  || strcmp(cmd, "/carro", true) == 0)
     {
 		if(IsPlayerConnected(playerid))
      	{
@@ -41525,7 +41774,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 		new Float:posconty = PlayerInfo[playerid][pPos_y];
 		new Float:poscontz = PlayerInfo[playerid][pPos_z];
 		if(IsPlayerConnected(playerid)){
-			if(timecont[playerid] != 1){
+			if(timecont[playerid] == 0){
 				SetPlayerPos(playerid,poscontx, posconty, poscontz);
 				SendClientMessage(playerid, -1, "[{00a613}SUCESSO{FFFFFF}] Voce voltou para seu lugar antigo!");
 				timecont[playerid] = 1;

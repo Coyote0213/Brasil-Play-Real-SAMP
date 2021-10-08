@@ -77,3 +77,7 @@
 [09/06/21 21:43:40] [ERROR] Can't read from Discord websocket gateway: Foi forçado o cancelamento de uma conexão existente pelo host remoto (10054)
 [09/06/21 21:43:40] [ERROR] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
 [09/14/21 08:32:11] [ERROR] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[09/17/21 23:36:29] [ERROR] Error while retrieving HTTP POST response from '/api/v8/channels/877681415016312873/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[09/17/21 23:36:29] [WARNING] Error while shutting down SSL on HTTP connection: Foi forçado o cancelamento de uma conexão existente pelo host remoto (10054)
+[09/17/21 23:45:42] [ERROR] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[09/17/21 23:45:42] [ERROR] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
