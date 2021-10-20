@@ -73225,3 +73225,341 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [16:20:41] [dbg:raknet:free] : module released
 [16:20:41] [sv:dbg:network:free] : module releasing...
 [16:20:41] [sv:dbg:network:free] : module released
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[16:21:38] 
+[16:21:38] Server Plugins
+[16:21:38] --------------
+[16:21:38]  Loading plugin: streamer
+[16:21:38] 
+
+*** Streamer Plugin v2.9.4 by Incognito loaded ***
+
+[16:21:38]   Loaded.
+[16:21:38]  Loading plugin: sscanf
+[16:21:38] 
+
+[16:21:38]  ===============================
+
+[16:21:38]       sscanf plugin loaded.     
+
+[16:21:38]          Version:  2.8.3        
+
+[16:21:38]   (c) 2018 Alex "Y_Less" Cole  
+
+[16:21:38]  ===============================
+
+[16:21:38]   Loaded.
+[16:21:38]  Loading plugin: MapAndreas
+[16:21:38]   Loaded.
+[16:21:38]  Loading plugin: sampvoice
+[16:21:38] [sv:dbg:network:init] : module initializing...
+[16:21:38] [dbg:raknet:init] : module initializing...
+[16:21:38] [dbg:raknet:init] : module initialized
+[16:21:38] [sv:dbg:network:init] : module initialized
+[16:21:38] [sv:dbg:main:Load] : creating 2 work threads...
+[16:21:38]  -------------------------------------------    
+[16:21:38]    ___                __   __    _              
+[16:21:38]   / __| __ _ _ __  _ _\ \ / /__ (_) __ ___    
+[16:21:38]   \__ \/ _` | '  \| '_ \   / _ \| |/ _/ -_)
+[16:21:38]   |___/\__,_|_|_|_| .__/\_/\___/|_|\__\___|
+[16:21:38]                   |_|                           
+[16:21:38]  -------------------------------------------    
+[16:21:38]            SampVoice by MOR loaded              
+[16:21:38]  -------------------------------------------    
+[16:21:38]   Loaded.
+[16:21:38]  Loading plugin: discord-connector
+[16:21:40]  >> plugin.dc-connector: v0.3.5 successfully loaded.
+[16:21:40]   Loaded.
+[16:21:40]  Loaded 5 plugins.
+
+[16:21:40] 
+[16:21:40] Ban list
+[16:21:40] --------
+[16:21:40]  Loaded: samp.ban
+[16:21:40] 
+[16:21:40] 
+[16:21:40] Filterscripts
+[16:21:40] ---------------
+[16:21:40]   Loading filterscript 'jogararma.amx'...
+[16:21:40] [sv:dbg:main:AmxLoad] : net game pointer (value:02279BF8) received
+[16:21:40] [sv:dbg:network:bind] : voice server running on port 51061
+[16:21:40]   Loading filterscript 'carinv.amx'...
+[16:21:40] 
+--------------------------------------
+[16:21:40] Inventory Vehicle By Vict9r
+[16:21:40] --------------------------------------
+
+[16:21:40]   Loading filterscript 'voip.amx'...
+[16:21:40]   Loaded 3 filterscripts.
+
+[16:21:41] Orgs do servidor Carregadas com sucesso.
+[16:21:41] Casas do Servidor Carregadas.
+[16:21:41] Empresas do Servidor Carregadas.
+[16:21:41] Empresas Especiais do Servidor Carregadas.
+[16:21:41] Carros do Servidor Carregados.
+[16:21:41] ************************************
+[16:21:41] *[<<<**************************>>>]*
+[16:21:41] *|    Brasil Play Real RP    |*
+[16:21:41] *|         Por Logan_Walker     |*
+[16:21:41] *[<<<**************************>>>]*
+[16:21:41] ************************************
+[16:21:41] Number of vehicle models: 9
+[16:21:41] [connection] 127.0.0.1:52412 requests connection cookie.
+[16:21:42] [connection] incoming connection: 127.0.0.1:52412 id: 0
+[16:21:42] [join] Logan_Walker has joined the server (0:127.0.0.1)
+[16:21:51] Logan_Walker has logged in.
+[16:21:51] [{0622c2}AVISO{FFFFFF}] Logan_Walker logou no servidor!
+[16:23:47] [AVISO]O ADM Logan_Walker usou o /kitadmin.
+[16:23:59] [chat] [Logan_Walker]: Nao
+[16:26:10] [part] Logan_Walker has left the server (0:2)
+[16:28:21] sscanf warning: Strings without a length are deprecated, please add a destination size.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[16:32:42] 
+[16:32:42] Server Plugins
+[16:32:42] --------------
+[16:32:42]  Loading plugin: streamer
+[16:32:42] 
+
+*** Streamer Plugin v2.9.4 by Incognito loaded ***
+
+[16:32:42]   Loaded.
+[16:32:42]  Loading plugin: sscanf
+[16:32:42] 
+
+[16:32:42]  ===============================
+
+[16:32:42]       sscanf plugin loaded.     
+
+[16:32:42]          Version:  2.8.3        
+
+[16:32:42]   (c) 2018 Alex "Y_Less" Cole  
+
+[16:32:42]  ===============================
+
+[16:32:42]   Loaded.
+[16:32:42]  Loading plugin: MapAndreas
+[16:32:42]   Loaded.
+[16:32:42]  Loading plugin: sampvoice
+[16:32:42] [sv:dbg:network:init] : module initializing...
+[16:32:42] [dbg:raknet:init] : module initializing...
+[16:32:42] [dbg:raknet:init] : module initialized
+[16:32:42] [sv:dbg:network:init] : module initialized
+[16:32:42] [sv:dbg:main:Load] : creating 2 work threads...
+[16:32:42]  -------------------------------------------    
+[16:32:42]    ___                __   __    _              
+[16:32:42]   / __| __ _ _ __  _ _\ \ / /__ (_) __ ___    
+[16:32:42]   \__ \/ _` | '  \| '_ \   / _ \| |/ _/ -_)
+[16:32:42]   |___/\__,_|_|_|_| .__/\_/\___/|_|\__\___|
+[16:32:42]                   |_|                           
+[16:32:42]  -------------------------------------------    
+[16:32:42]            SampVoice by MOR loaded              
+[16:32:42]  -------------------------------------------    
+[16:32:42]   Loaded.
+[16:32:42]  Loading plugin: discord-connector
+[16:32:44]  >> plugin.dc-connector: v0.3.5 successfully loaded.
+[16:32:44]   Loaded.
+[16:32:44]  Loaded 5 plugins.
+
+[16:32:44] 
+[16:32:44] Ban list
+[16:32:44] --------
+[16:32:44]  Loaded: samp.ban
+[16:32:44] 
+[16:32:45] 
+[16:32:45] Filterscripts
+[16:32:45] ---------------
+[16:32:45]   Loading filterscript 'jogararma.amx'...
+[16:32:45] [sv:dbg:main:AmxLoad] : net game pointer (value:02449BF8) received
+[16:32:45] [sv:dbg:network:bind] : voice server running on port 50102
+[16:32:45]   Loading filterscript 'carinv.amx'...
+[16:32:45] 
+--------------------------------------
+[16:32:45] Inventory Vehicle By Vict9r
+[16:32:45] --------------------------------------
+
+[16:32:45]   Loading filterscript 'voip.amx'...
+[16:32:45]   Loaded 3 filterscripts.
+
+[16:32:45] Orgs do servidor Carregadas com sucesso.
+[16:32:46] Casas do Servidor Carregadas.
+[16:32:46] Empresas do Servidor Carregadas.
+[16:32:46] Empresas Especiais do Servidor Carregadas.
+[16:32:46] Carros do Servidor Carregados.
+[16:32:46] ************************************
+[16:32:46] *[<<<**************************>>>]*
+[16:32:46] *|    Brasil Play Real RP    |*
+[16:32:46] *|         Por Logan_Walker     |*
+[16:32:46] *[<<<**************************>>>]*
+[16:32:46] ************************************
+[16:32:46] Number of vehicle models: 9
+[16:33:17] [connection] 26.150.222.24:64579 requests connection cookie.
+[16:33:18] [connection] incoming connection: 26.150.222.24:64579 id: 0
+[16:33:18] [join] Logan_Walker has joined the server (0:26.150.222.24)
+[16:33:30] Logan_Walker has logged in.
+[16:33:30] [{0622c2}AVISO{FFFFFF}] Logan_Walker logou no servidor!
+[16:33:48] [chat] [Logan_Walker]: A
+[16:33:52] [chat] [Logan_Walker]: a
+[16:33:59] [BATE PAPO][0]Logan_Walker:{FFFFFF} Oi
+[16:34:02] [OLX][0]Logan_Walker:{FFFFFF} Oi
+[16:34:06] [190][0]Logan_Walker:{FFFFFF} Oi
+[16:34:10] [ILEGAL][0]Logan_Walker:{FFFFFF} Oi
+[16:37:50] [part] Logan_Walker has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[17:45:35] 
+[17:45:35] Server Plugins
+[17:45:35] --------------
+[17:45:35]  Loading plugin: streamer
+[17:45:35] 
+
+*** Streamer Plugin v2.9.4 by Incognito loaded ***
+
+[17:45:35]   Loaded.
+[17:45:35]  Loading plugin: sscanf
+[17:45:35] 
+
+[17:45:35]  ===============================
+
+[17:45:35]       sscanf plugin loaded.     
+
+[17:45:35]          Version:  2.8.3        
+
+[17:45:35]   (c) 2018 Alex "Y_Less" Cole  
+
+[17:45:35]  ===============================
+
+[17:45:35]   Loaded.
+[17:45:35]  Loading plugin: MapAndreas
+[17:45:35]   Loaded.
+[17:45:35]  Loading plugin: sampvoice
+[17:45:35] [sv:dbg:network:init] : module initializing...
+[17:45:35] [dbg:raknet:init] : module initializing...
+[17:45:35] [dbg:raknet:init] : module initialized
+[17:45:35] [sv:dbg:network:init] : module initialized
+[17:45:35] [sv:dbg:main:Load] : creating 2 work threads...
+[17:45:35]  -------------------------------------------    
+[17:45:35]    ___                __   __    _              
+[17:45:35]   / __| __ _ _ __  _ _\ \ / /__ (_) __ ___    
+[17:45:35]   \__ \/ _` | '  \| '_ \   / _ \| |/ _/ -_)
+[17:45:35]   |___/\__,_|_|_|_| .__/\_/\___/|_|\__\___|
+[17:45:35]                   |_|                           
+[17:45:35]  -------------------------------------------    
+[17:45:35]            SampVoice by MOR loaded              
+[17:45:35]  -------------------------------------------    
+[17:45:35]   Loaded.
+[17:45:35]  Loading plugin: discord-connector
+[17:45:36]  -------------------------------------------
+[17:45:36]            SampVoice unloading...           
+[17:45:36]  -------------------------------------------
+[17:45:36] [dbg:raknet:free] : module releasing...
+[17:45:36] [dbg:raknet:free] : module released
+[17:45:36] [sv:dbg:network:free] : module releasing...
+[17:45:36] [sv:dbg:network:free] : module released
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[17:51:46] 
+[17:51:47] Server Plugins
+[17:51:47] --------------
+[17:51:47]  Loading plugin: streamer
+[17:51:47] 
+
+*** Streamer Plugin v2.9.4 by Incognito loaded ***
+
+[17:51:47]   Loaded.
+[17:51:47]  Loading plugin: sscanf
+[17:51:47] 
+
+[17:51:47]  ===============================
+
+[17:51:47]       sscanf plugin loaded.     
+
+[17:51:47]          Version:  2.8.3        
+
+[17:51:47]   (c) 2018 Alex "Y_Less" Cole  
+
+[17:51:47]  ===============================
+
+[17:51:47]   Loaded.
+[17:51:47]  Loading plugin: MapAndreas
+[17:51:47]   Loaded.
+[17:51:47]  Loading plugin: sampvoice
+[17:51:47] [sv:dbg:network:init] : module initializing...
+[17:51:47] [dbg:raknet:init] : module initializing...
+[17:51:47] [dbg:raknet:init] : module initialized
+[17:51:47] [sv:dbg:network:init] : module initialized
+[17:51:47] [sv:dbg:main:Load] : creating 2 work threads...
+[17:51:47]  -------------------------------------------    
+[17:51:47]    ___                __   __    _              
+[17:51:47]   / __| __ _ _ __  _ _\ \ / /__ (_) __ ___    
+[17:51:47]   \__ \/ _` | '  \| '_ \   / _ \| |/ _/ -_)
+[17:51:47]   |___/\__,_|_|_|_| .__/\_/\___/|_|\__\___|
+[17:51:47]                   |_|                           
+[17:51:47]  -------------------------------------------    
+[17:51:47]            SampVoice by MOR loaded              
+[17:51:47]  -------------------------------------------    
+[17:51:47]   Loaded.
+[17:51:47]  Loading plugin: discord-connector
+[17:51:48]  >> plugin.dc-connector: v0.3.5 successfully loaded.
+[17:51:48]   Loaded.
+[17:51:49]  Loaded 5 plugins.
+
+[17:51:49] 
+[17:51:49] Ban list
+[17:51:49] --------
+[17:51:49]  Loaded: samp.ban
+[17:51:49] 
+[17:51:50] 
+[17:51:50] Filterscripts
+[17:51:50] ---------------
+[17:51:50]   Loading filterscript 'jogararma.amx'...
+[17:51:50] [sv:dbg:main:AmxLoad] : net game pointer (value:021D9BF8) received
+[17:51:50] [sv:dbg:network:bind] : voice server running on port 57369
+[17:51:50]   Loading filterscript 'carinv.amx'...
+[17:51:50] 
+--------------------------------------
+[17:51:50] Inventory Vehicle By Vict9r
+[17:51:50] --------------------------------------
+
+[17:51:50]   Loading filterscript 'voip.amx'...
+[17:51:50]   Loaded 3 filterscripts.
+
+[17:51:50] Script[gamemodes/BPR.amx]: Run time error 17: "Invalid/unsupported P-code file format"
+[17:51:50] Failed to load 'gamemodes/BPR.amx' script.
+[17:51:50] Number of vehicle models: 0
+[17:51:51]  -------------------------------------------
+[17:51:51]            SampVoice unloading...           
+[17:51:51]  -------------------------------------------
+[17:51:51] [dbg:raknet:free] : module releasing...
+[17:51:51] [dbg:raknet:free] : module released
+[17:51:51] [sv:dbg:network:free] : module releasing...
+[17:51:51] [sv:dbg:network:free] : module released

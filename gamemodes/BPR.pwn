@@ -463,6 +463,13 @@ new TempoAnGov;
 new Tempocbomba;
 new Tempohbomba;
 new TempoJetpack;
+
+new TempoGMX5;
+new TempoGMX4;
+new TempoGMX3;
+new TempoGMX2;
+new TempoGMX1;
+
 new v[6];
 //=========================[Sistema de Salario]=================================
 new SalarioCargo1 = 1000,
@@ -1954,7 +1961,7 @@ new Unspec[MAX_PLAYERS][pSpec];
 enum eCars{model_id,Float:pos_x,Float:pos_y,	Float:pos_z,Float:z_angle,};
 enum hNews{hTaken1,hTaken2,hTaken3,hTaken4,hTaken5,hAdd1[128],hAdd2[128],hAdd3[128],hAdd4[128],hAdd5[128],hContact1[128],hContact2[128],hContact3[128],hContact4[128],hContact5[128],};
 new News[hNews];
-enum pInfo{pKey[128],pID,pLevel,pAdmin,pHelper,pScripter,pMapper,pMod,pResp,pEquipe,pVIP,pGrampo,gPupgrade,pConnectTime,pReg,pSex,pAge,pOrigem,pMuted,pAjustado,pVoto,
+enum pInfo{pKey[128],pID,pLevel,pAdmin,pHelper,pScripter,pMapper,pMod,pResp,pEquipe,pYoutuber,pStreamer,pVIP,pGrampo,gPupgrade,pConnectTime,pReg,pSex,pAge,pOrigem,pMuted,pAjustado,pVoto,
 pRecebeuSalario,pSequestrado,pExp,pDsujo,pCoins,pCash,pConta,pCrimes,pKills,pDeaths,pPhoneBook,pLottoNr,pEmprego,
 pSalario,pHeadValue,pHeadValueT,pJailed,pJailTime,pPecas,pMats,pDrogas,pDrogas2,pDrogas3,pLider,pGerente,pMembro,pCargo,
 pSkin,pGold,pContractTime,pDetSkill,pSexSkill,pBoxSkill,pLawSkill,pMechSkill,pNewsSkill,pDrogasSkill,pCookSkill,
@@ -2728,7 +2735,9 @@ BPR::DCC_OnMessageCreate(DCC_Message:message){
 			format(AVISOMenssage,sizeof(AVISOMenssage),"{0000FF}AVISO:{FFFFFF} Servidor reiniciando agora!!");
 			SendClientMessageToAll(COLOR_WHITE,AVISOMenssage);*/
 			//DCC_SendChannelMessage(chatChannel, "Servidor reiniciando agora!");
-			SetTimer("GMX5min", 300000 , true);
+			for(new i = 0; i < MAX_PLAYERS; i++) {
+				GMX5min(i);
+			}
 			DCC_SendChannelMessage(channel, "Timer do GMX iniciado com sucesso!");
 		}
 	}
@@ -7736,9 +7745,21 @@ BPR::OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				else
 				{
 				    SendClientMessage(playerid, COLOR_GREEN, "Voce nao e um jogador VIP");
-			}
+				}
 			}
 			if(listitem == 11)
+			{
+				if (PlayerInfo[playerid][pYoutuber] >= 1 || PlayerInfo[playerid][pStreamer] >= 1)
+				{
+		    		SendClientMessage(playerid, COLOR_YELLOW, "|______________ Ajuda Youtuber ______________|");
+					SendClientMessage(playerid, COLOR_GREEN, "-> /anyt /jet /yt(chat)");
+				}
+				else
+				{
+				    SendClientMessage(playerid, COLOR_GREEN, "Voce nao e um jogador Youtuber/Streamer");
+				}
+			}
+			if(listitem == 12)
 			{
 			    SendClientMessage(playerid, COLOR_YELLOW, "|______________ Seja VIP ______________|");
 		   		SendClientMessage(playerid, COLOR_GREEN,"/Discord - Para virar VIP acesse nosso Discord");
@@ -9569,6 +9590,8 @@ BPR::OnPlayerConnect(playerid)
 	PlayerInfo[playerid][pMapper] = 0;
 	PlayerInfo[playerid][pHelper] = 0;
 	PlayerInfo[playerid][pMod] = 0;
+	PlayerInfo[playerid][pYoutuber] = 0;
+	PlayerInfo[playerid][pStreamer] = 0;
 	PlayerInfo[playerid][pResp] = 0;
 	PlayerInfo[playerid][pEquipe] = 0;
 	PlayerInfo[playerid][pAjustado] = 0;
@@ -15193,7 +15216,7 @@ BPR::StartTimerGMX(playerid){
 	return 1;
 }
 BPR::GMX5min(playerid){
-	SetTimer("GMX4min" , 60000 , true);
+	TempoGMX5 = SetTimer("GMX4min" , 60000 , true);
 	SendClientMessageToAll(-1, "[{0000FF}AVISO{FFFFFF}] Servidor reiniciando em 5 minutos!");
 	new DCC_Embed:embed = DCC_CreateEmbed();
 	new str[128];
@@ -15206,36 +15229,50 @@ BPR::GMX5min(playerid){
 	return 1;
 }
 BPR::GMX4min(playerid){
-	SetTimer("GMX3min" , 60000 , true);
+	TempoGMX4 = SetTimer("GMX3min" , 60000 , true);
+	KillTimer(TempoGMX5);
 	SendClientMessageToAll(-1, "[{0000FF}AVISO{FFFFFF}] Servidor reiniciando em 4 minutos!");
 	return 1;
 }
 BPR::GMX3min(playerid){
-	SetTimer("GMX2min" , 60000 , true);
+	TempoGMX3 = SetTimer("GMX2min" , 60000 , true);
+	KillTimer(TempoGMX4);
 	SendClientMessageToAll(-1, "[{0000FF}AVISO{FFFFFF}] Servidor reiniciando em 3 minutos!");
 	return 1;
 }
 BPR::GMX2min(playerid){
-	SetTimer("GMX1min" , 60000 , true);
+	TempoGMX2 = SetTimer("GMX1min" , 60000 , true);
+	KillTimer(TempoGMX3);
 	SendClientMessageToAll(-1, "[{0000FF}AVISO{FFFFFF}] Servidor reiniciando em 2 minutos!");
 	return 1;
 }
 BPR::GMX1min(playerid){
-	SetTimer("GMXFinalizado" , 60000 , true);
+	TempoGMX1 = SetTimer("GMXFinalizado" , 60000 , true);
+	KillTimer(TempoGMX2);
 	SendClientMessageToAll(-1, "[{0000FF}AVISO{FFFFFF}] Servidor reiniciando em 1 minuto!");
 	SendClientMessageToAll(-1, "Por favor, deslogue!");
 	return 1;
 }
 BPR::GMXFinalizado(playerid){
+	KillTimer(TempoGMX1);
+	new DCC_Embed:embed = DCC_CreateEmbed();
+	new str[128];
+	DCC_SetEmbedTitle(embed, "AVISO");
+    DCC_SetEmbedColor(embed, 0xFF0000);
+    format(str, sizeof str, "Servidor reiniciando agora! 1 Minuto para retornar!");
+    DCC_SetEmbedDescription(embed, str);
+	DCC_SetEmbedFooter(embed, "Atenciosamente, Equipe Brasil Play Real", "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
+	DCC_SendChannelEmbedMessage(chatChannel, embed);
 	GameModeExitFunc();
 	SaveAccounts();
 	OnPlayerSave(playerid);
 	return 1;
 }
 //--------------------------------------------------------------------------------------------------------------------------------------
+new Timer5minrc;
 BPR::TimerRC5min(){
-	SendClientMessageToAll(-1, "[{0000FF}AVISO{FFFFFF}] Todos os carros livres serao respawnados!");
-	SetTimer("TimerRC", 300000, true);
+	SendClientMessageToAll(-1, "[{0000FF}AVISO{FFFFFF}] Todos os carros livres serao respawnados em 5 minutos!!");
+	Timer5minrc = SetTimer("TimerRC", 300000, true);
 	return 1;
 }
 BPR::TimerRC(){
@@ -15246,7 +15283,7 @@ BPR::TimerRC(){
     }
 	for(new car = 1; car <= MAX_VEHICLES; car++)
 	{
-	if(car > 36) {
+	if(car >= 36) {
 		DestroyVehicle(car);
 		for(new player=0; player<MAX_PLAYERS; player++)
 		{
@@ -15260,7 +15297,9 @@ BPR::TimerRC(){
 	}
 	if(!unwanted[car]) SetVehicleToRespawn(car);
 	}
+	SendClientMessageToAll(-1, "[{0000FF}AVISO{FFFFFF}] Todos os carros livres foram respawnados!!");
 	printf("RC automatico efetuado com sucesso!!");
+	KillTimer(Timer5minrc);
 	return 1;
 }
 BPR::OnGameModeInit()
@@ -18539,6 +18578,8 @@ BPR::OnPlayerRegister(playerid, password[])
 				format(var, 32, "Modeler=%d\n",PlayerInfo[playerid][pMapper]);fwrite(hFile, var);
 				format(var, 32, "ResponsavelEquipe=%d\n",PlayerInfo[playerid][pResp]);fwrite(hFile, var);
 				format(var, 32, "Equipe=%d\n",PlayerInfo[playerid][pEquipe]);fwrite(hFile, var);
+				format(var, 32, "Youtuber=%d\n",PlayerInfo[playerid][pYoutuber]);fwrite(hFile, var);
+				format(var, 32, "Streamer=%d\n",PlayerInfo[playerid][pStreamer]);fwrite(hFile, var);
 				format(var, 32, "DonateRank=%d\n",PlayerInfo[playerid][pVIP]);fwrite(hFile, var);
 				format(var, 32, "UpgradePoints=%d\n",PlayerInfo[playerid][gPupgrade]);fwrite(hFile, var);
 				format(var, 32, "ConnectedTime=%d\n",PlayerInfo[playerid][pConnectTime]);fwrite(hFile, var);
@@ -18694,6 +18735,8 @@ BPR::OnPlayerLogin(playerid,password[])
 					if( strcmp( key , "ModLevel" , true ) == 0 ) { val = ini_GetValue( Data ); PlayerInfo[playerid][pMod] = strval( val ); }
 					if( strcmp( key , "ResponsavelEquipe" , true ) == 0 ) { val = ini_GetValue( Data ); PlayerInfo[playerid][pResp] = strval( val ); }
 					if( strcmp( key , "Equipe" , true ) == 0 ) { val = ini_GetValue( Data ); PlayerInfo[playerid][pEquipe] = strval( val ); }
+					if( strcmp( key , "Youtuber" , true ) == 0 ) { val = ini_GetValue( Data ); PlayerInfo[playerid][pYoutuber] = strval( val ); }
+					if( strcmp( key , "Streamer" , true ) == 0 ) { val = ini_GetValue( Data ); PlayerInfo[playerid][pStreamer] = strval( val ); }
 					if( strcmp( key , "DonateRank" , true ) == 0 ) { val = ini_GetValue( Data ); PlayerInfo[playerid][pVIP] = strval( val ); }
 			        if( strcmp( key , "DonateRank" , true ) == 0 ) { val = ini_GetValue( Data ); PlayerInfo[playerid][pVIP] = strval( val ); }
 			        if( strcmp( key , "UpgradePoints" , true ) == 0 ) { val = ini_GetValue( Data ); PlayerInfo[playerid][gPupgrade] = strval( val ); }
@@ -19012,6 +19055,8 @@ BPR::OnPlayerUpdate(playerid)
 				format(var, 32, "Modeler=%d\n",PlayerInfo[playerid][pMapper]);fwrite(hFile, var);
 				format(var, 32, "ResponsavelEquipe=%d\n",PlayerInfo[playerid][pResp]);fwrite(hFile, var);
 				format(var, 32, "Equipe=%d\n",PlayerInfo[playerid][pEquipe]);fwrite(hFile, var);
+				format(var, 32, "Youtuber=%d\n",PlayerInfo[playerid][pYoutuber]);fwrite(hFile, var);
+				format(var, 32, "Streamer=%d\n",PlayerInfo[playerid][pStreamer]);fwrite(hFile, var);
 				format(var, 32, "DonateRank=%d\n",PlayerInfo[playerid][pVIP]);fwrite(hFile, var);
 				format(var, 32, "UpgradePoints=%d\n",PlayerInfo[playerid][gPupgrade]);fwrite(hFile, var);
 				format(var, 32, "ConnectedTime=%d\n",PlayerInfo[playerid][pConnectTime]);fwrite(hFile, var);
@@ -19267,6 +19312,8 @@ BPR::OnPlayerSave(playerid)
 				format(var, 32, "Modeler=%d\n",PlayerInfo[playerid][pMapper]);fwrite(hFile, var);
 				format(var, 32, "ResponsavelEquipe=%d\n",PlayerInfo[playerid][pResp]);fwrite(hFile, var);
 				format(var, 32, "Equipe=%d\n",PlayerInfo[playerid][pEquipe]);fwrite(hFile, var);
+				format(var, 32, "Youtuber=%d\n",PlayerInfo[playerid][pYoutuber]);fwrite(hFile, var);
+				format(var, 32, "Streamer=%d\n",PlayerInfo[playerid][pStreamer]);fwrite(hFile, var);
 				format(var, 32, "DonateRank=%d\n",PlayerInfo[playerid][pVIP]);fwrite(hFile, var);
 				format(var, 32, "UpgradePoints=%d\n",PlayerInfo[playerid][gPupgrade]);fwrite(hFile, var);
 				format(var, 32, "ConnectedTime=%d\n",PlayerInfo[playerid][pConnectTime]);fwrite(hFile, var);
@@ -20770,7 +20817,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 		return 1;
 	}
 
-	if(strcmp(cmd, "/darmode", true) == 0)
+	if(strcmp(cmd, "/darstreamer", true) == 0)
 	{
 	    if(IsPlayerConnected(playerid))
 	    {
@@ -20782,32 +20829,56 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 			tmp = strtok(cmdtext, idx);
 			if(!strlen(tmp))
 			{
-				SendClientMessage(playerid, COLOR_GRAD2, "USE: /darmode [id] [Nivel]");
+				SendClientMessage(playerid, COLOR_GRAD2, "USE: /darstreamer [id]");
 				return 1;
 			}
 			new para1;
-			//new level;
 			para1 = ReturnUser(tmp);
-			/*tmp = strtok(cmdtext, idx);
-			if(!strlen(tmp))
-			{
-				SendClientMessage(playerid, COLOR_GRAD2, "USE: /darmode [id] [Nivel]");
-				return 1;
-			}
-			level = strval(tmp);*/
-			//if(PlayerInfo[playerid][pAdmin] <= level) return SendClientMessage(playerid, -1, "Voce nao pode setar um cargo maior ou igual o seu!");
-			
 			GetPlayerName(para1, giveplayer, sizeof(giveplayer));
 			GetPlayerName(playerid, sendername, sizeof(sendername));
 		    if(IsPlayerConnected(para1))
 		    {
 		        if(para1 != INVALID_PLAYER_ID)
 		        {
-					format(string, sizeof(string), "   Voce foi setado como Modeler - Por %s", sendername);
+					format(string, sizeof(string), "   Voce foi setado como Streamer - Por %s", sendername);
 					SendClientMessage(para1, COLOR_LIGHTBLUE, string);
-					format(string, sizeof(string), "   Voce setou o(a) %s para Modeler.", giveplayer);
+					format(string, sizeof(string), "   Voce setou o(a) %s para Streamer.", giveplayer);
 					SendClientMessage(playerid, COLOR_LIGHTBLUE, string);
-					PlayerInfo[para1][pMapper] = 1;
+					PlayerInfo[para1][pStreamer] = 1;
+				}
+			}
+		}
+		return 1;
+	}
+
+	if(strcmp(cmd, "/darytb", true) == 0)
+	{
+	    if(IsPlayerConnected(playerid))
+	    {
+	        if(PlayerInfo[playerid][pAdmin] < 1341)
+	    	{
+				SendClientMessage(playerid, COLOR_GRAD1, "Voce nao tem autorizacao para usar esse comando.");
+				return 1;
+	    	}
+			tmp = strtok(cmdtext, idx);
+			if(!strlen(tmp))
+			{
+				SendClientMessage(playerid, COLOR_GRAD2, "USE: /darytb [id]");
+				return 1;
+			}
+			new para1;
+			para1 = ReturnUser(tmp);
+			GetPlayerName(para1, giveplayer, sizeof(giveplayer));
+			GetPlayerName(playerid, sendername, sizeof(sendername));
+		    if(IsPlayerConnected(para1))
+		    {
+		        if(para1 != INVALID_PLAYER_ID)
+		        {
+					format(string, sizeof(string), "   Voce foi setado como Youtuber - Por %s", sendername);
+					SendClientMessage(para1, COLOR_LIGHTBLUE, string);
+					format(string, sizeof(string), "   Voce setou o(a) %s para Youtuber.", giveplayer);
+					SendClientMessage(playerid, COLOR_LIGHTBLUE, string);
+					PlayerInfo[para1][pYoutuber] = 1;
 				}
 			}
 		}
@@ -24639,6 +24710,69 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 		else
 		{
   			SendClientMessage(playerid,COLOR_YELLOW," Voce e um jogandor vip!!");
+			return true;
+		}
+    }
+
+	if(strcmp(cmd, "/anyt", true) == 0)
+    {
+        if(PlayerInfo[playerid][pYoutuber] >= 1 || PlayerInfo[playerid][pStreamer] >= 1)
+        {
+	        	if(PlayerInfo[playerid][pJailed] != 0)
+		    	{
+					SendClientMessage(playerid,COLOR_YELLOW," Voce nao pode usar esse comando na cadeia!!");
+		      		return true;
+		    	}
+				GetPlayerName(playerid, sendername, sizeof(sendername));
+				new length = strlen(cmdtext);
+				while ((idx < length) && (cmdtext[idx] <= ' '))
+				{
+					idx++;
+				}
+				new offset = idx;
+				new result[100];
+				while ((idx < length) && ((idx - offset) < (sizeof(result) - 1)))
+				{
+					result[idx - offset] = cmdtext[idx];
+					idx++;
+				}
+				result[idx - offset] = EOS;
+				if(!strlen(result))
+				{
+					SendClientMessage(playerid, COLOR_GREEN, "USE: /anyt [Texto do Anuncio]");
+					return true;
+				}
+				new str[128];
+				new player[128];
+				new organ[128];
+				new DCC_Embed:embed = DCC_CreateEmbed();
+				DCC_SetEmbedTitle(embed, "Log Anuncio");
+				DCC_SetEmbedColor(embed, 0xFF0000);
+				format(str, sizeof str, "Novo anuncio in game");
+				DCC_SetEmbedDescription(embed, str);
+				format(player, sizeof player, "`%s`", PlayerName(playerid));
+				DCC_AddEmbedField(embed, "Player:", player, false);
+				format(organ, sizeof organ, "`%s`", result);
+				DCC_AddEmbedField(embed, "Anuncio:", organ, false);
+				DCC_SetEmbedThumbnail(embed, "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
+				DCC_SetEmbedFooter(embed, "Log Brasil Play Real", "https://cdn.discordapp.com/attachments/856094328359616522/856094355869794304/21057e50ab1bbf1c4c4c0ae1b2ab845b.png");
+				DCC_SendChannelEmbedMessage(logAn, embed);
+
+				if(PlayerInfo[playerid][pYoutuber]){
+					format(string, sizeof(string), "[{E50505}YOUTUBER{FFFFFF}][%s] - %s", sendername, result);
+					SendClientMessageToAll(-1,string);
+					return 1;
+				}
+				if(PlayerInfo[playerid][pStreamer]){
+					format(string, sizeof(string), "[{991590}STREAMER{FFFFFF}][%s] - %s", sendername, result);
+					SendClientMessageToAll(-1,string);
+					return 1;
+				}
+				return true;
+		}
+		else
+		{
+  			SendClientMessage(playerid,COLOR_YELLOW," Voce e um jogandor Youtuber/Streamer!!");
 			return true;
 		}
     }
@@ -34558,7 +34692,8 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 				return 1;
 			}
    			GetPlayerName(playerid, playername, sizeof(playername));
-   			format(string, sizeof(string), "- {FFFFFF}Admin %s {FFFFFF}deu Respawn, todos os carros foram para seu local de inicio.", playername);
+			TimerRC5min();
+   			/*format(string, sizeof(string), "- {FFFFFF}Admin %s {FFFFFF}deu Respawn, todos os carros foram para seu local de inicio.", playername);
 			SendClientMessageToAll(0xAAFFCC33,string);
 			new bool:unwanted[MAX_VEHICLES];
 			for(new player=0; player<MAX_PLAYERS; player++)
@@ -34567,7 +34702,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
      		}
 			for(new car = 1; car <= MAX_VEHICLES; car++)
 			{
-				if(car > 36) {
+				if(car >= 36) {
 					DestroyVehicle(car);
 					for(new player=0; player<MAX_PLAYERS; player++)
 					{
@@ -34580,7 +34715,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 					}
 				}
 				if(!unwanted[car]) SetVehicleToRespawn(car);
-			}
+			}*/
 		}
 		return 1;
 	}
@@ -35107,7 +35242,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 //>-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     if(strcmp(cmd, "/jet", true) == 0 || strcmp(cmd, "/jetpack", true) == 0 || strcmp(cmd, "/jp", true) == 0)
     {
-        if(PlayerInfo[playerid][pVIP] >= 2 || PlayerInfo[playerid][pAdmin] >= 2)
+        if(PlayerInfo[playerid][pVIP] >= 2 || PlayerInfo[playerid][pAdmin] >= 2 || PlayerInfo[playerid][pYoutuber] >= 1 || PlayerInfo[playerid][pStreamer] >= 1)
         {
 			if(TimerJet > 0) return SendClientMessage(playerid, COLOR_LIGHTRED, "Aguarde 30 segundos para pegar sua jetpack novamente!");
 			TimerJet = 1;
@@ -39510,11 +39645,11 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 		    		if(IsPlayerConnected(i))
 		    		{ OnPlayerSave(i); }
 				}
-				GameTextForPlayer(playerid, "~p~Servidor reiniciando em 10 segundos", 3000, 3);
-				//SetTimer("GMX5min" , 300000 , true)
-				GameModeExitFunc();
+				//GameTextForPlayer(playerid, "~p~Servidor reiniciando em 10 segundos", 3000, 3);
+				GMX5min(playerid);
+				/*GameModeExitFunc();
 				SaveAccounts();
-				OnPlayerSave(playerid);
+				OnPlayerSave(playerid);*/
 			}
 			else
 			{
@@ -40632,7 +40767,7 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
 	    if(IsPlayerConnected(playerid))
 	    {
 	        TogglePlayerControllable(playerid, 0);
-	    	ShowPlayerDialog(playerid, 10, DIALOG_STYLE_LIST, "Ajuda", "Ajuda Player\nAjuda Empresa\nAjuda Casa\nAjuda Aluguel\nAjuda Celular\nAjuda Lider\nAjuda Emprego\nAjuda Casamento\nDiscord\nCreditos\nAjuda VIP\n*** Conta VIP ***", "Selecionar", "Cancelar");
+	    	ShowPlayerDialog(playerid, 10, DIALOG_STYLE_LIST, "Ajuda", "Ajuda Player\nAjuda Empresa\nAjuda Casa\nAjuda Aluguel\nAjuda Celular\nAjuda Lider\nAjuda Emprego\nAjuda Casamento\nDiscord\nCreditos\nAjuda VIP\nAjuda Youtuber/Streamer\n*** Conta VIP ***", "Selecionar", "Cancelar");
 		}
 		return 1;
 	}
@@ -41008,7 +41143,8 @@ BPR::OnPlayerCommandText(playerid, cmdtext[])
             if (PlayerInfo[playerid][pAdmin] >= 1341)
 			{
                 strcat(StrChatADM, "{0000CD}Fundador: /atualizar3dtext /deletarconta /trazercasa /descricao\n");
-                strcat(StrChatADM, "Fundador: /daradmin /limparadmin /infoadm /carid\n");
+                strcat(StrChatADM, "Fundador: /daradmin /limparadmin /infoadm /carid /darytb /darstreamer\n");
+				strcat(StrChatADM, "Fundador: /dardev\n");
 			}
 			ShowPlayerDialog(playerid, 5478, DIALOG_STYLE_MSGBOX, "COMANDOS ADMINS", StrChatADM, "OK", "");
 		}
