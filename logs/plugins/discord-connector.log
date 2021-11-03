@@ -81,3 +81,12 @@
 [09/17/21 23:36:29] [WARNING] Error while shutting down SSL on HTTP connection: Foi forçado o cancelamento de uma conexão existente pelo host remoto (10054)
 [09/17/21 23:45:42] [ERROR] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
 [09/17/21 23:45:42] [ERROR] Can't write to Discord websocket gateway: A operação de E/S foi anulada devido a uma saída de thread ou a uma requisição de aplicativo (995)
+[10/22/21 20:24:20] [ERROR] DCC_SendChannelEmbedMessage: invalid channel id '0'
+[10/22/21 20:25:51] [ERROR] DCC_SendChannelEmbedMessage: invalid channel id '0'
+[10/22/21 20:31:23] [ERROR] Error while retrieving HTTP POST response from '/api/v8/channels/865653965353386024/messages': Foi forçado o cancelamento de uma conexão existente pelo host remoto
+[10/22/21 20:31:23] [WARNING] Error while shutting down SSL on HTTP connection: Foi forçado o cancelamento de uma conexão existente pelo host remoto (10054)
+[10/22/21 22:03:11] [ERROR] DCC_SendChannelEmbedMessage: invalid embed id '1'
+[10/31/21 20:20:02] [ERROR] DCC_SendChannelEmbedMessage: invalid channel id '0'
+[10/31/21 20:20:54] [ERROR] DCC_SendChannelEmbedMessage: invalid channel id '0'
+[10/31/21 20:20:58] [ERROR] DCC_SendChannelEmbedMessage: invalid channel id '0'
+[10/31/21 20:30:11] [ERROR] DCC_SendChannelEmbedMessage: invalid channel id '0'
